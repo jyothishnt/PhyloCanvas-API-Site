@@ -1,0 +1,153 @@
+body{
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+    font-weight: 100;
+	line-height:20pt;
+	max-width:none;
+	/* Move down content because we have a fixed navbar that is 50px tall */
+    /*padding-top: 50px;*/
+    padding-bottom: 20px;
+    /*background-image:url('../img/Epicollect.png');
+    background-size: 15%;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: bottom left;*/
+}
+
+h1{
+	line-height:53pt
+}
+h1{
+	font-size:2.5em;
+	text-shadow:none
+}
+h1.pageheader{font-size:3.5em;border-bottom:1px solid #CCC;text-shadow:-1px 1px #eee,1px 1px #aaa}
+.light{font-weight:100;}
+p.question{font-size:18pt;font-weight:100;line-height:22pt}
+p.question:before{display:inline-block;font-size:30pt;color:#CCC;content:'* ';font-weight:300;vertical-align:top;margin-right:.5em}
+p.answer{padding: 5px 80px;line-height:18pt;text-align:left}
+h2{
+    font-size:2.0em;
+    text-shadow:none
+}
+h3{
+    font-size:1.5em;
+    text-shadow:none;
+    line-height: 1.8em;
+    border-bottom: 1px solid #eee;
+/*    background-image:url('../img/arrows.gif');
+    background-repeat: no-repeat;
+    background-position: left 15px;
+    padding-left: 15px;
+*/}
+}
+h4{
+    font-size:1.3em;
+    text-shadow:none
+}
+p{
+	margin: 20px 0px;
+}
+
+#accordion_menu {
+    background-image:url('../img/Epicollect.png');
+    background-size: 40px;
+    background-repeat: no-repeat;
+    background-position: top left;
+    padding: 50px 0px 0 5px;
+    /*background: #ccc;*/
+    max-height: 400px;
+    /*width:220px;*/
+    /*position: fixed;*/
+}
+ul {
+    list-style: none;
+    margin: 0px;
+    padding-left: 5px;
+    margin-left: 10px;
+}
+ul.circle {
+    list-style-type: circle;
+    padding-left: 5px;
+    margin-left: 30px;
+}
+#accordion_menu ul {
+    list-style: none;
+    padding: 0px;
+}
+#accordion_menu ul li {
+    cursor: pointer;
+    font-size: 16px;
+    margin: 8px 0px;
+    color: #777;
+}
+#accordion_menu ul li a:hover {
+    color: #444;
+    text-decoration: none;
+}
+#accordion_menu .active{
+    /*background: #eee;*/
+    color: #444;
+    padding-right: 12px;
+    text-decoration: none;
+    background-image:url('../img/arrows.gif');
+    background-repeat: no-repeat;
+    background-position: right 7px;
+}
+
+#fork{
+    z-index:999999;
+    position: absolute; 
+    top: 50px; 
+    right: 0; 
+    border: 0;
+    position: fixed;   
+}
+.stick {
+    position:fixed !important;
+    top:0px !important;
+}
+#overview iframe{ 
+    width: 100%;
+    height: 600px;
+    border: none;
+}
+.submenu {
+    display: none;
+}
+.submenu li:hover {
+    color: #444 !important;
+}
+
+dl {
+    /*font-size: 0.9em;*/
+}
+dl dt{
+    padding: 5px 0px;
+    letter-spacing: 1px;
+    /*margin: 5px;*/
+    color: #017D98;
+    /*color: #fff;*/
+}
+dl dd {
+    padding: 5px 0px;
+}
+
+dl.arguments {
+    font-size: 80%;
+    background: #eef;
+}
+dl.arguments dt{
+    padding: 10px 0px 0 5px;
+    color: #515;
+}
+dl.arguments dt:after{display:inline-block;content:': ';}
+dl.arguments dd{
+    padding: 5px 10px;
+    border-bottom: 10px solid #fff;
+}
+.properties td:first-child{
+    color: #017D98;
+    min-width: 150px;
+}
+

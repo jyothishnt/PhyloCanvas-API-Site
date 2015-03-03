@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PhyloCanvas</title>
+
+        <meta name="viewport" content="width=device-width" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="js/phylodoc.js"></script>
+        <script src="js/PhyloCanvas.js"></script>
+        <!-- <link href='http://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'> -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="css/phylodoc.css">
+        <link rel="stylesheet" href="css/PhyloCanvas.css">
+    </head>
+    <body>
+
+
+    <nav class="navbar navbar-inverse navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand" href="#">Phylocanvas</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="search" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Search</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>
+
+        <div class="container">
+            <div class="row">
+
+              <div class="col-lg-2 col-md-2">
+                <nav>
+                    <div id="accordion_menu">
+                        <ul>
+                          <li><a class="active" data-id="overview">Overview</a></li>
+                          <li><a data-id="getting_started">Getting Started</a></li>
+                          <li><a data-id="tech_doc">Technical Doc</a></li>
+                          <li><a data-id="api_ref">API Reference</a>
+                          <li><a data-id="code_samples">Code Samples</a>
+                            <!-- <ul>
+                              <li><a href="#">Tree</a></li>
+                              <li><a href="#">Branch</a></li>
+                              <li><a href="#">Leaf</a></li>
+                            </ul> -->
+                          </li>
+                          <li><a data-id="faqs">FAQs</a></li>
+                        </ul>
+                    </div>
+                </nav>
+              </div>
+
+
+              <div id="content" class="col-lg-9 col-md-9">
+                <section id="overview">
+                  <h4 style="float: right">Version <b>1.2.25</b></h4>
+                  <h1 class="pageheader"><img src="img/Epicollect.png" width="25%" style="padding: 10px 20px"><span class="light"> Phylo</span>Canvas</h1>
+
+                  <div class="paragraph">
+                    <p>PhyloCanvas is written entirely in browser-native JavaScript, using no external libraries, and uses the HTML5 Canvas element.</p>
+                    <p>The intention of PhyloCanvas is to make a tree viewer that is as widely reusable, extensible and performant.</p>
+                  </div>
+                  <h3>Example</h3>
+                  
+                  <div id="buttons">
+                      <button id="rectangular" class="btn">Rectangular</button>
+                      <button id="circular" class="btn">Circular</button>
+                      <button id="radial" class="btn">Radial</button>
+                      <button id="diagonal" class="btn">Diagonal</button>
+                      <button id="hierarchy" class="btn">Hierarchical</button>
+                  </div>
+                  <div id="phylocanvas"></div><br>
+
+                  <!-- <iframe src="http://localhost/test/PhyloCanvas/src/demo.html"></iframe> -->
+                </section>
+
+                <section id="getting_started">
+                  <h1>How to use</h1>
+                  <hr>
+                  <div id="initialize">
+                      <h3>Get PhyloCanvas</h3>
+                      <p>There are a couple of ways to include PhyloCanvas in your project, using bower or cloning directly from github.
+
+                      <h3>Bower</h3>
+                      <pre class="code">$ bower install --save PhyloCanvas</pre>
+
+                      <p>Then you need to include</p>
+
+                      <pre class="code">
+&lt;link rel="stylesheet" type="text/css" href="/bower_components/PhyloCanvas/src/styles/PhyloCanvas.css"&gt;
+
+&lt;script type="application/javascript" src="/bower_components/PhyloCanvas/src/scripts/PhyloCanvas.js"&gt;&lt;/script&gt</pre>
+                      
+                      <h3>GitHub</h3>
+                      <pre class="code">$ git clone https://github.com/ImpericalCollegeLondon/PhyloCanvas.git</pre>
+
+                      <pre class="code">
+&lt;link rel="stylesheet" type="text/css" href="/PhyloCanvas/src/styles/PhyloCanvas.css"&gt;
+
+&lt;script type="application/javascript" src="/PhyloCanvas/src/scripts/PhyloCanvas.js"&gt;&lt;/script&gt</pre>
+
+                      <p>Remember to adjust the URL to suit the location of the PhyloCanvas code within your project</p>
+
+                      <h3>Initializing</h3>
+                      <p>You only need 2 lines of code to get your phylocanvas instance up and running. 
+                        <ul class="circle">
+                          <li>One to initialize the viewer and </li>
+                          <li>Second to load the file. </li>
+                        </ul>
+                      </p>
+                      <pre class="code">
+  var phylocanvas = new PhyloCanvas.Tree(<i>div_name</i>, <i>[config object]</i>); // initialize your tree viewer
+
+  phylocanvas.load(<i>newick_file</i>); // load your tree file</pre>
+                  </div>
+                  <a href="http://jsbin.com/zekobemale/8/edit?html,js,output" target="_blank">View example</a>
+                </section>
+
+                <section id="tech_doc">
+                  <h1> Technical Documentation </h1><hr>
+                  <h3>Code Structure</h3>
+                  <p>The PhyloCanvas code is Object-oriented and uses the prototype
+                    of a JavaScript "class" to describe the class functions.<p>
+
+                  <p>As well as providing an organisational structure for the code, using
+                  the prototype means that the code for the functions isn't copied into memory
+                  for each instance of PhyloCanvas.</p>
+
+                  <h3>Rendering</h3>
+                  <p>The rendering engine for PhyloCanvas is designed
+                    to minimise the amount of load that is placed on the client browser.
+                    As such the rendering events only fire when the user performs an action
+                    such as zooming or panning through the tree.
+                  </p>
+                  <p>The rendering itself is split into 2 phases, a pre-render to
+                    perform all the calculations related to determining the postion
+                    and layout of the tree, leaving only the actual drawing of the tree
+                    at the correct positon (offset) and zoom level. </p>
+                  <p>When a subtree of the main tree is redrawn from a branch or
+                  a branch is rotated the tree reset and then pre-render must be re-run.</p>
+                </section>
+
+                <section id="faqs">
+                    <h1>FAQs</h1>
+                    <p class="question">Why Canvas and not SVG?</p>
+                    <p class="answer">There are pros and cons to both, but ultimately at the start of the project the Canvas API was better supported
+                        across browers than inline SVG </p>
+
+                </section>
+                <section id="api_ref">
+                  <h1> API Reference </h1>
+                  <hr>
+                  <ul>
+                    <li><a href="#api_classes">Classes</a></li>
+                    <li><a href="#api_tree">Tree</a></li>
+                    <li><a href="#api_events">Events</a></li>
+                    <li><a href="#">Branch</a></li>
+                    <li><a href="#">Loader</a></li>
+                    <li><a href="#">Navigator</a></li>
+                  </ul>
+                  <div id="api_classes">
+                    <h2>Classes</h2>
+                      <table class="table table-striped properties">
+                        <tr class="info">
+                          <td>Class Name</td>
+                          <td>Description</td>
+                        </tr>
+                        <tr>
+                          <td>Branch</td>
+                          <td>Describes an individual branch in the tree</td>
+  <!--                     <td>Loader <i>(deprecated)</i></td>
+                        <td>Describes the "loading" animation</td>
+                        </tr> -->
+                        <tr>
+                          <td>Navigator</td>
+                          <td>Descibes the optional overview that shows the position
+                            of the current view relative to the whole tree. <i>requires work</i></td>
+                        </tr>
+                        <tr>
+                          <td>Tree</td>
+                          <td>
+                            Describes the whole tree object, as well as the functions related to viewing the tree.
+                            <i>Should possibly be split into 2 objects, the Tree and the Viewer</i></td>
+                          </td>
+                        </tr>
+                    </table>
+                  </div>
+                  <div id="api_tree">
+                    <h2>PhyloCanvas.Tree</h2>
+                    <h3>Configuration</h3>
+<!--                     <p class="note">To be expanded in v 1.3.0</p>
+                    <dl class="dl-horizontal">
+                      <dt>history_collapsed - <i>boolean</i></dt>
+                        <dd>Is the history initially in the collapsed state</dd>
+                    </dl>
+
+ -->
+                      <table class="table table-striped properties">
+                        <tr class="info">
+                            <td>Property</td>
+                            <td>Type</td>
+                            <td>Description</td>
+                        </tr>
+                        <tr>
+                          <td>backColour</td>
+                          <td>bool/function (default : <code>false</code>)</td>
+                          <td>
+                          Possible values:
+                            <ul>
+                            <li><code>false</code> : the branches are all coloured according to Tree.branchColour</li>
+                            <li><code>true</code> : leaves are coloured according to their <code>.colour</code> property. If all of an Internal branches
+                              children are of the same colour the branch takes that colour, otherwise it uses <code>Tree.branchColour</code></li>
+                            <li><code>{string:rgba} function(branch)</code> : the branch colour is determined by the colour returned by the function.
+                              Ideally the returned colour should be an RGBA value</li>
+                            </ul>
+                          </td>
+                        </tr>
+
+                        <tr>
+                          <td>baseNodeSize</td>
+                          <td>integer</td>
+                          <td>The radius of a leaf tip if no other size is specified</td>
+                        </tr>
+
+                        <tr>
+                          <td>branchColour</td>
+                          <td>rgba value</td>
+                          <td>The normal colour of the branches</td>
+                        </tr>
+
+                        <tr>
+                          <td>branchScalar</td>
+                          <td>double</td>
+                          <td>A multiplier for the branch length to produce the best
+                          possible definition between branch lengths <code>(branchLength * branchScalar =
+                          drawnLength)</code></td>
+                        </tr>
+
+                        <tr>
+                          <td>branches</td>
+                          <td>object</td>
+                          <td>An object containing each branch keyed by it's ID. Internal
+                          branches without IDs are given generated Ids prefixed with 'pcn',
+                          the root will typically be 'pcn0'</td>
+                        </tr>
+
+                        <tr>
+                          <td>canvas</td>
+                          <td>HTMLCanvasContext</td>
+                          <td>The canvas used to draw the tree</td>
+                        </tr>
+
+                        <tr>
+                          <td>canvasEl</td>
+                          <td>HTMLDivElement</td>
+                          <td>The element that contains PhyloCanvas. Should normally be a block element. (Slight misnoma for legacy reasons)</td>
+                        </tr>
+
+                        <tr>
+                          <td>contextMenu</td>
+                          <td>PhyloCanvas.ContextMenu</td>
+                          <td>A reference to the context menu object that belongs to this instance</td>
+                        </tr>
+
+                        <tr>
+                          <td>dragging</td>
+                          <td>boolean</td>
+                          <td>A variable for internal use the records whether
+                          the pre-render has run (named for legacy reasons)</td>
+                        </tr>
+
+                        <tr>
+                          <td>nodeAlign</td>
+                          <td>boolean (default: <code>false</code>)</td>
+                          <td>To align all the nodes vertically</code></td>
+                        </tr>
+
+                        <tr>
+                          <td>drawn</td>
+                          <td>boolean</td>
+                          <td>The font face to use for tree labels</td>
+                        </tr>
+
+                        <tr>
+                          <td>drawn</td>
+                          <td>boolean</td>
+                          <td>A variable for internal use the records whether
+                            the pre-render has run (named for legacy reasons)</td>
+                        </tr>
+
+                        <tr>
+                          <td>font</td>
+                          <td>string</td>
+                          <td>The font face to use for tree labels</td>
+                        </tr>
+
+                        <tr>
+                          <td>highlightColour</td>
+                          <td>rgba value</td>
+                          <td>The colour highlighted branches change to</td>
+                        </tr>
+
+                        <tr>
+                          <td>hightlightWitdh</td>
+                          <td>integer (default : 5)</td>
+                          <td>How much bigger do highlighted nodes/branches get</td>
+                        </tr>
+
+                        <tr>
+                          <td>hoverLabel</td>
+                          <td>boolean</td>
+                          <td>If the labels are turned off, and this is true, show
+                            the node label when hovering over the node tip.</td>
+                        </tr>
+
+                        <tr>
+                          <td>internalNodesSelectable</td>
+                          <td>boolean</td>
+                          <td>Can internal nodes be selected, if false, only leaves
+                            are selectable</td>
+                        </tr>
+
+                        <tr>
+                          <td>lastId</td>
+                          <td>integer</td>
+                          <td>The last id returned by the id generator</td>
+                        </tr>
+
+                        <tr>
+                          <td>leaves</td>
+                          <td>array - PhyloCanvas.Branch[ ]</td>
+                          <td>An array of every node without children, the tips
+                            of the tree </td>
+                        </tr>
+
+                        <tr>
+                          <td>lineWitdh</td>
+                          <td>double (default:1.0)</td>
+                          <td>The witdh of the lines that make up the branches, as
+                          well as the outline of the nodes</td>
+                        </tr>
+
+                        <tr>
+                          <td>maxBranchLength</td>
+                          <td>double, read only</td>
+                          <td>The max branchlength from the root of the tree to
+                            the furthest tip</td>
+                        </tr>
+
+                        <tr>
+                          <td>offsetx/offsety</td>
+                          <td>integer</td>
+                          <td>The the position of the diagram origin (0,0)
+                          relative to the centre of the viewer</td>
+                        </tr>
+
+                        <tr>
+                          <td>origBL</td>
+                          <td>object</td>
+                          <td>The original branch lengths, populated when a
+                            subtree is drawn </td>
+                        </tr>
+
+                        <tr>
+                          <td>origP</td>
+                          <td>object</td>
+                          <td>The original parent of the new root, populated when a
+                            subtree is drawn </td>
+                        </tr>
+
+                        <tr>
+                          <td>pickedUp</td>
+                          <td>boolean</td>
+                          <td>Is the left mouse button being held down over the
+                            tree</td>
+                        </tr>
+
+                        <tr>
+                          <td>rightClickZoon</td>
+                          <td>boolean (default : <code>true</code>)</td>
+                          <td>Enable zooming the tree by dragging with the right mouse button</td>
+                        </tr>
+
+                        <tr>
+                          <td>selectedColour</td>
+                          <td>rgba value</td>
+                          <td>The colour the branch and node change to when selected</td>
+                        </tr>
+
+                        <tr>
+                          <td>selectedNodeSizeIncrease</td>
+                          <td>integer (default : 0)</td>
+                          <td>How much bigger do selected nodes get</td>
+                        </tr>
+
+                        <tr>
+                          <td>showBootstrap</td>
+                          <td>boolean (default:<code>false</code>)</td>
+                          <td>Whether or not to show all the bootstrap confidences</td>
+                        </tr>
+
+                        <tr>
+                          <td>showLabels</td>
+                          <td>boolean (default: <code>true</code>)</td>
+                          <td>Whether or not to draw all the leaf labels</td>
+                        </tr>
+
+                        <tr>
+                          <td>textSize</td>
+                          <td>integer</td>
+                          <td>The size of the branch labels (in px)</td>
+                        </tr>
+
+                        <tr>
+                          <td>treetype</td>
+                          <td>string (default : radial)</td>
+                          <td>which branchRenderer to use, supplied renderers are:
+                            radial, rectangular, circular, diagonal and hierarchy</td>
+                        </tr>
+
+                        <tr>
+                          <td>root</td>
+                          <td>Branch</td>
+                          <td>A reference to the root of the tree</td>
+                        </tr>
+
+                        <tr>
+                          <td>unselectOnClickAway</td>
+                          <td>boolean (default : <code>true</code>)</td>
+                          <td>Deselect when the user clicks on somewhere on the canvas
+                            that isn't the tree</td>
+                        </tr>
+
+                        <tr>
+                          <td>selectedNodes</td>
+                          <td>array - PhyloCanvas.Branch[ ]</td>
+                          <td>An array of the selected branches</td>
+                        </tr>
+
+                        <tr>
+                          <td>zoom</td>
+                          <td>double</td>
+                          <td>The current Zoom level</td>
+                        </tr>
+                      </table>
+
+
+                    <h3>Functions</h3>
+                    <table class="table table-striped properties">
+                      <tr class="info">
+                        <td>Function</td>
+                        <td>Parameters</td>
+                        <td>Description</td>
+                      </tr>
+                      <tr>
+                        <td>AJAX</td>
+                        <td>
+                          <ul>
+                            <li>url</li> <li> method</li> <li> params</li> <li> callback</li> <li> callbackPars</li> <li> scope</li> <li> errorCallback</li>
+                          </ul>
+                        </td>
+                        <td>Make an AJAX call and pass the data returned to the callback. Used in the load method</td>
+                      </tr>
+
+                      <tr>
+                        <td>addListener</td>
+                        <td>
+                          <ul>
+                            <li>event_name</li><li>listener</li>
+                          </ul>
+                        </td>
+                        <td>attach a listener to an event from the tree</td>
+                      </tr>
+
+                      <tr>
+                        <td>on</td>
+                        <td>
+                          <ul>
+                            <li>event_name</li><li>listener</li>
+                          </ul>
+                        </td>
+                        <td>attach a listener to an event from the tree</td>
+                      </tr>
+
+                      <tr>
+                        <td>adjustForPixelRatio</td>
+                        <td></td>
+                        <td>
+                          compensate for Retina display/browser zoom
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>branchRenderers</td>
+                        <td>
+                          <ul>
+                            <li>collection</li>
+                          </ul>
+                        </td>
+                        <td>Functions that enable the drawing of different tree structures. Default
+                          branchRenderers are radial, rectangular, circular, diagonal, hierarchy </td>
+                      </tr>
+                      
+                      <tr>
+                        <td>buildLeaves</td>
+                        <td></td>
+                        <td>Reconstruct the leaves array in the correct order after
+                          a rotation</td>
+                      </tr>
+
+                      <tr>
+                        <td>clicked</td>
+                        <td>
+                          <ul>
+                            <li>event</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Handler for mouse <code>clicked</code> event on the canvas
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>dblclicked</td>
+                        <td>
+                          <ul>
+                            <li>event</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Handler for mouse <code>double click</code> event on the canvas
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>drag</td>
+                        <td>
+                          <ul>
+                            <li>event</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Handler for mouse <code>drag</code> event on the canvas
+                        </td>
+                      </tr>
+
+                      <tr>
+                      <td>drop</td>
+                        <td>
+                          <ul>
+                            <li>event</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Handler for mouse <code>drop</code> event on the canvas
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>pickup</td>
+                        <td>
+                          <ul>
+                            <li>event</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Handler for mouse <code>pickup</code> event on the canvas
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>scroll</td>
+                        <td>
+                          <ul>
+                            <li>event</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Handler for mouse <code>scroll</code> event on the canvas
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>displayLabels</td>
+                        <td></td>
+                        <td>
+                          Show the lables on the tree
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>draw</td>
+                        <td>
+                          <ul>
+                            <li>forceRedraw</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Draw the tree with the settings provided, forceRedraw causes
+                          the prerenderer to redraw. forceRedraw = <code>true/false</code>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>exportNwk</td>
+                        <td></td>
+                        <td>
+                          Return the newick string of the currently displayed tree
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>findBranch</td>
+                        <td>
+                          <ul>
+                            <li>pattern</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Find a branch accodring to the pattern provided. <br> Case insensitive match
+                          against the leaf ID
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>fitInPanel</td>
+                        <td></td>
+                        <td>
+                          fit the tree within the current canvas panel
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>genId</td>
+                        <td></td>
+                        <td>
+                          Generate a node Id prefixed with 'pcn'
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>getBounds</td>
+                        <td></td>
+                        <td>
+                          get the overall size of the tree
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>getPngUrl</td>
+                        <td></td>
+                        <td>
+                          Get the dataURL for the current view
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>hideLabels</td>
+                        <td></td>
+                        <td>
+                          Hide the lables on the tree
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>load</td>
+                        <td>
+                          <ul>
+                            <li>filename</li>
+                            <li>tree_name</li>
+                            <li>format</li>
+                          </dl>
+                        </td>
+                        <td>
+                          <p>Parse a newick or nexus format string and draw the tree</p></p>
+                          <dl class="arguments">
+                            <dt>filename (String)</dt>
+                            <dd>The name of the file you wish to open via AJAX or the NWK or Nexus String</dd>
+
+                            <dt>tree_name (String)</dt>
+                            <dd>If using nexus format, the name of the tree to draw. But default Phylocanvas picks the first tree</dd>
+
+                            <dt>format (nexus|newick)</dt>
+                            <dd>Override the parsing algorithm for the string provided</dd>
+                          </dl>
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>loadCompleted</td>
+                        <td></td>
+                        <td>Fire the event that signals the load is completed</td>
+                      </tr>
+
+                      <tr>
+                        <td>loadError</td>
+                        <td>
+                          <ul>
+                            <li>message</li>
+                          </ul>
+                        </td>
+                        <td>Fire the event that signals the load has failed</td>
+                      </tr>
+
+                      <tr>
+                        <td>loadStarted</td>
+                        <td></td>
+                        <td>Fire the event that signals the load has started</td>
+                      </tr>
+
+                      <tr>
+                        <td>nodeRenderers</td>
+                        <td>
+                          <ul>
+                            <li>collection</li>
+                          </ul>
+                        </td>
+                        <td> Render the tip of a leaf. Extensible collection that includes <br>
+                          <code>circle</code> (default),
+                          <code>square</code>,
+                          <code>triangle</code>,
+                          <code>star</code>.
+                          <p>
+                            Rotation and offset of
+                            the canvas are set so that 0,0 is the tip of the branch.
+                          </p>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>nodeSelected(nids)</td>
+                        <td></td>
+                        <td>Fire the event that signals nodes have been selected</td>
+                      </tr>
+
+                      <tr>
+                        <td>parseNexus</td>
+                        <td>
+                          <ul>
+                            <li>nexus_string</li>
+                            <li>name</li>
+                          </ul>
+                        </td>
+                        <td>Parse a nexus formatted string. If using Nexus
+                        the tree name should be specified, normally these methods are
+                        invoked from within the load function</td>
+                      </tr>
+
+                      <tr>
+                        <td>parseNwk</td>
+                        <td>
+                          <ul>
+                            <li>Newick string</li>
+                          </ul>
+                        </td>
+                        <td>Parse a Nexus or nwk formatted string.</td>
+                      </tr>
+
+                      <tr>
+                        <td>prerenderers</td>
+                        <td>
+                          <ul>
+                            <li>collection</li>
+                          </ul>
+                        </td>
+                        <td>Functions calculate the structure of the tree before drawing. Default
+                          pre-renderers are radial, rectangular, circular, diagonal, hierarchy.
+                      </tr>
+
+                      <tr>
+                        <td>redrawFromBranch</td>
+                        <td>
+                          <ul>
+                            <li>node</li>
+                            <li>leafIds</li>
+                          </ul>
+                        </td>
+                        <td>
+                          recursively get the IDs of the leaves in a sub-tree, putting the results
+                          in leafIds
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>redrawFromBranch</td>
+                        <td>
+                          <ul>
+                            <li>node</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Redraw a sub-tree from an internal node of a tree.
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>redrawOriginalTree</td>
+                        <td></td>
+                        <td>
+                          redraw the tree from it's original root
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>resetTree</td>
+                        <td></td>
+                        <td>
+                          Reset the tree ready for the pre-renderers to recalculate
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>resizeToContainer</td>
+                        <td></td>
+                        <td>Fit the whole widget within it's parent div</td>
+                      </tr>
+
+                      <tr>
+                        <td>rotateBranch</td>
+                        <td>
+                          <ul>
+                            <li>branch</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Reverse the order a branch's children are drawn in
+                        </td>
+                      </tr>
+
+                      <tr>
+                      <td>saveNode</td>
+                        <td>
+                          <ul>
+                            <li>node</li>
+                          </ul>
+                        </td>
+                        <td>
+                          Atd a node to the tree. Used by the parsers.
+                        </td>
+                      </tr>
+
+                      <tr>
+                      <td>selectNodes</td>
+                        <td>
+                          <ul>
+                            <li>nodeIds</li>
+                          </ul>
+                        </td>
+                        <td>Select the nodes specified by node ids (array or comma seperated list).
+                          <b>N.B.</b> all leaves must be adjacent in the tree</td>
+                      </tr>
+
+                      <tr>
+                      <td>setFont</td>
+                        <td>
+                          <ul>
+                            <li>font</li>
+                          </ul>
+                        </td>
+                        <td>Change the font for the node labels</td>
+                      </tr>
+
+                      <tr>
+                        <td>setNodeColourAndShape</td>
+                        <td>
+                          <ul>
+                            <li>nodeIds</li>
+                            <li>colour</li>
+                            <li>shape</li>
+                            <li>size</li>
+                            <li>waiting</li>
+                          </ul>
+                        </td>
+                        <td>Change the node colour and/or shape, optional arguments must be replaced
+                          by null or undefined if subsequent arguments are set. All the parameters are optional except nodeIds.
+
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>setNodeSize</td>
+                        <td>
+                          <ul>
+                            <li>size</li>
+                          </ul>
+                        </td>
+                      <td>Set the base size of all the nodes</td>
+                      </tr>
+
+                      <tr>
+                        <td>setRoot</td>
+                        <td>
+                          <ul>
+                            <li>node</li>
+                          </ul>
+                        </td>
+                        <td>Set the root node of the tree</td>
+                      </tr>
+
+                      <tr>
+                        <td>setTextSize</td>
+                        <td>
+                          <ul>
+                            <li>size</li>
+                          </ul>
+                        </td>
+                        <td>Set the size of the labels</td>
+                      </tr>
+
+                      <tr>
+                        <td>setTreeType</td>
+                        <td>
+                          <ul>
+                            <li>type</li>
+                          </ul>
+                        </td>
+                        <td>
+                          <p>Hide the lables on the tree</p>
+                          <dl class="arguments">
+                            <dt>type (String)</dt>
+                            <dd>The name of the type of tree to change to (rectangular, radial, circular, diagonal, hierarchy)
+                            </dd>
+                          </dl>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td>setSize</td>
+                        <td>
+                          <ul>
+                            <li>width</li>
+                            <li>height</li>
+                          </ul>
+                        </td>
+                        <td>Set the size of the tree</td>
+                      </tr>
+
+                      <tr>
+                        <td>setZoom</td>
+                        <td>
+                          <ul>
+                            <li>zoom_level</li>
+                          </ul>
+                        </td>
+                        <td>Set the zoom level of the tree</td>
+                      </tr>
+
+                      <tr>
+                        <td>toggleLabels</td>
+                        <td></td>
+                        <td>Toggle the labels on and off</td>
+                      </tr>
+
+                      <tr>
+                        <td>translateClickX</td>
+                        <td>
+                          <ul>
+                            <li>click_x</li>
+                          </ul>
+                        </td>
+                        <td>Take the X postion of the click from the browser event
+                          and turn it into a position relative to the tree</td>
+                      </tr>
+
+                      <tr>
+                        <td>translateClickY</td>
+                        <td>
+                          <ul>
+                            <li>click_y</li>
+                          </ul>
+                        </td>
+                        <td>Take the Y postion of the click from the browser event
+                          and turn it into a position relative to the tree</td>
+                      </tr>
+
+                      <tr>
+                        <td>treeTypeChanged</td>
+                        <td>
+                          <ul>
+                            <li>old_type</li>
+                            <li>new_type</li>
+                          </ul>
+                        </td>
+                        <td>Fire the event that signals the tree type has been changed</td>
+                      </tr>
+
+                    </table>
+
+
+                    <div id="api_events">
+                      <h3>Events</h3></a>
+                      <p>PhyloCanvas exposes a number of events that allow web pages to change according to activity within PhyoCanvas. The API also exposes a couple of helper methods to enable binding of events to the API.</p>
+                      
+                      <h4>Helper Methods</h4>
+                      <table class="table table-striped properties">
+                        <tr class="info">
+                          <td>Function</td>
+                          <td>Parameters</td>
+                          <td>Description</td>
+                        </tr>
+                        <tr>
+                          <td>Tree.on</td>
+                          <td>
+                            <ul>
+                              <li>event name</li>
+                              <li>handler</li>
+                            </ul>
+                          </td>
+                          <td>Add the specified <i>handler</i> to the specified <i>event name</i></td>
+                        </tr>
+
+                        <tr>
+                          <td>Tree.addListener</td>
+                          <td>
+                            <ul>
+                              <li>event name</li>
+                              <li>handler</li>
+                            </ul>
+                          </td>
+                          <td>Add the specified <i>handler</i> to the specified <i>event name</i></td>
+                        </tr>
+                      </table>
+
+                    <h3>Events</h3>
+                    <dl class="dl-horizontal">
+                      <dt>loading</dt>
+                        <dd>Fires when the widget starts loading a file via AJAX</dd>
+
+                      <dt>loaded</dt>
+                        <dd>Fires when a tree has completed loading.</dd>
+
+                      <dt>error</dt>
+                        <dd>
+                          Fires if an error is encountered by the loading or parsing process
+                          <h4>Properties</h4>
+                          <dl class="dl-horizontal">
+                            <dt>message</dt>
+                              <dd>The Error message</dd>
+                          </dl>
+                        </dd>
+
+                      <dt>subtree</dt>
+                        <dd>
+                          Fires when the user draws a subtree
+                          <h4>Properties</h4>
+                          <dl class="dl-horizontal">
+                            <dt>node</dt>
+                              <dd>The id of the node chosen as the new root</dd>
+                          </dl>
+                        </dd>
+
+                      <dt>typechanged</dt>
+                        <dd>
+                          Fires when the tree type is changed
+                          <dl class="dl-horizontal">
+                            <dt>oldType</dt>
+                              <dd>The name of the type of tree that was being displayed before the type was changed</dd>
+
+                            <dt>newType</dt>
+                              <dd>The name of the type of tree that the view was changed to</dd>
+                          </dl>
+                        </dd>
+
+                      <dt>selected</dt>
+                        <dd>
+                          Fires when the user selectes node(s)
+                          <h4>Properties</h4>
+                          <dl class="dl-horizontal">
+                            <dt>nodes</dt>
+                              <dd>An Array of the IDs of selected node</dd>
+                          </dl>
+                        </dd>
+
+
+                    </dl>
+<!--
+                    <div name="api-branch">
+                      <a name="branch"></a>
+                      <h2>PhyloCanvas.Branch</h2>
+
+                      <h4>Properties</h4>
+                        <dt>angle</dt>
+                          <dd>
+                            The angle (clockwise from horizontal) of the node branch
+                          </dd>
+                        <dt>branchLength</dt>
+                          <dd>
+                            The relative length of the branch as defined in the nwk/nexus string
+                          </dd>
+                        <dt>canvas</dt>
+                          <dd>
+                            A reference to the canvas on which the branch is drawn
+                          </dd>
+                        <dt>centrex/centrey</dt>
+                          <dd>
+                            The position of the end of the node.
+                          </dd>
+                        <dt>children</dt>
+                          <dd>
+                            The child branches of this branch
+                          </dd>
+
+                        <dt>collapsed</dt>
+                          <dd>
+                            Has the branch been collapsed
+                          </dd>
+
+                        <dt>colour</dt>
+                          <dd>
+                            The fill colour of the node tip
+                          </dd>
+
+                        <dt>data</dt>
+                          <dd>
+                            a custom object that can be used in conjustion with a
+                            custom noderenderer
+                          </dd>
+
+
+                        <dt>id</dt>
+                          <dd>
+                            The unique identifier for a node, particulary for identifying leaf nodes, this becomes the
+                            key to <i>Tree.branches</i>
+                          </dd>
+
+                        <dt>interx/interx</dt>
+                          <dd>
+                            Used by layouts that align all the nodes at the same distance
+                            from the root, but needing to show branch lengths (e.g. circular layout);
+                          </dd>
+
+                        <dt>label</dt>
+                          <dd>
+                            The label shown next to the node. Blank strings will be displayed, if the label is null (default)
+                            or undefined the ID is displayed instead
+                          </dd>
+
+                        <dt>leaf</dt>
+                          <dd>
+                            True if the branch has no children and is therefore
+                            a leaf
+                          </dd>
+
+                        <dt>maxChildAngle</dt>
+                        <dt>minChildAngle</dt>
+                          <dd>
+                            The maxim
+                          </dd>
+
+                        <dt>startx</dt>
+                        <dt>starty</dt>
+                          <dd>
+                            The position of the start of the branch (the parent nodes centrex/centrey)
+                          </dd>
+
+                        <dt>totalBranchLength</dt>
+                          <dd>
+                            The total distance from the root of the tree to the tip of the branch
+                          </dd>
+
+                        <dt>tree</dt>
+                          <dd>
+                            A reference to the tree object that this branch belongs too
+                          </dd>
+
+
+                      <h4>Functions</h4>
+                        <dt>addChild(<i>node</i>)</dt>
+                          <dd>Add a child branch to this branch</dd>
+
+                        <dt>clicked(<i>x</i>, <i>y</i>)</dt>
+                          <dd>see if this branch is the one that has been clicked given the x
+                          and y coordinates (output from Tree.translateClickX/Y)</dd>
+
+                        <dt>collapse</dt>
+                          <dd>Collapse this branch</dd>
+
+                        <dt>drawLabel</dt>
+                          <dd>Draw the label for this branch</dd>
+
+                        <dt>drawNode</dt>
+                          <dd>draw the coloured tip of this branch</dd>
+
+                        <dt>expand()</dt>
+                          <dd>Expand (uncollapse) the node</dd>
+
+                        <dt>getColour()</dt>
+                          <dd>Get the tip or branch colour of this node depeneding on whether its
+                          a leaf or an internal node</dd>
+
+                        <dt>getChildColours()</dt>
+                          <dd>return an array of the colours of this childs children</dd>
+
+                        <dt>getChildCount()</dt>
+                          <dd>get the <b>total</b> number of children under this node and all
+                          of it's children.</dd>
+
+                        <dt>getChildIds()</dt>
+                          <dd>Return the IDs of all the leaves under this branch (recursively)</dd>
+
+                        <dt>getChildNo()</dt>
+                          <dd>Get the position of this node in it's parents children
+                          array</dd>
+
+                        <dt>getChildYTotal()</dt>
+                          <dd>Return the total distance on the Y axis occupied by this nodes children</dd>
+
+                        <dt>getLabel()</dt>
+                          <dd>return the text that labels this node, if no label is
+                          set return the node id</dd>
+
+                        <dt>getLabelSize()</dt>
+                          <dd>Return the width of this node's label</dd>
+
+                        <dt>getNodeSize()</dt>
+                          <dd>Get the size of the tip of the node</dd>
+
+                        <dt>getNWK()</dt>
+                          <dd>Return the nwk format string of this node</dd>
+
+                        <dt>getTextColour()</dt>
+                          <dd>Get the colour of the label</dd>
+
+                        <dt>parseNwk(nwk_string, idx)</dt>
+                          <dd>recursive parsing function for a nwk file</dd>
+
+                        <dt>parseLabel(nwk_string, idx)</dt>
+                          <dd>parse a label from a nwk string</dd>
+
+                        <dt>parseNodeLength(nwk_string, idx)</dt>
+                          <dd>Parse the node length from a nwk string</dd>
+
+                        <dt>redrawTreeFromBranch()</dt>
+                          <dd>Draw a subtree from this branch</dd>
+
+                        <dt>reset()</dt>
+                          <dd>set all the branches positional properties back to 0 ready for the
+                          next branch layout</dd>
+
+                        <dt>rotate()</dt>
+                          <dd>Reverse the order of the nodes immediate children. The reverse function is available in the right-click menu</dd>
+
+                        <dt>saveChildren()</dt>
+                          <dd>save this nodes children to the tree</dd>
+
+                        <dt>setHighlighted(highlighted)</dt>
+                          <dd>Sets whether or not this branch is highlighted (true or false)</dd>
+
+                        <dt>setSelected(<i>selected</i>, <i>applyToChildren</i>)</dt>
+                          <dd>Set whether the node is selected (true or false) and whether
+                          this should be applied to all it's children.</dd>
+
+
+                        <dt>setTotalBranchLength()</dt>
+                          <dd>calculate the total branch length property for this node</dd>
+
+                        <dt>toggleCollapse()</dt>
+                          <dd>Toggle this node between collapsed and expanded</dd>
+
+                    </div>
+
+                    <div>
+                      <h2>PhyloCanvas.History</h2>
+                      <p>The history panel of sub-trees
+                      <h4>Properties</h4>
+                      <dl class="dl-horizontal">
+                        <dt>tree</dt>
+                          <dd>reference to the tree object</dd>
+
+                        <dt>div</dt>
+                          <dd>the dive containing the history</dd>
+                      </dl>
+
+                      <h4>Functions</h4>
+                      <dl class="dl-horizontal">
+                        <dt>reset()</dt>
+                          <dd>Clear all the snapshots and then add the root snapshot</dd>
+
+                        <dt>collapse()</dt>
+                          <dd>Collapse the histroy panel into the left of the PhyloCanvas
+                            div</dd>
+
+                        <dt>expand()</dt>
+                          <dd>Show the History</dd>
+
+                        <dt>isCollapsed()</dt>
+                          <dd>return true if the history is collapsed and false if it isn't</dd>
+
+                        <dt>toggle()</dt>
+                          <dd>If the history is collapsed exapand it and vice-versa</dd>
+
+                        <dt>createDiv(parentDiv)</dt>
+                          <dd>Crete the div that will contain the history</dd>
+
+                        <dt>resizeTree()</dt>
+                          <dd>Adjust the size of the tree to compensate for the History being
+                          collapsed or expanded</dd>
+
+                        <dt>addSnapshot(id)</dt>
+                          <dd>Add a snapshot of the current tree view that will redraw the
+                            tree from the node with the ID id.</dd>
+
+                        <dt>clear()</dt>
+                          <dd>Remove all the snapshots</dd>
+
+                        <dt>goBackTo(event)</dt>
+                          <dd>Click handler for the snapshots that removes the subsequent
+                          history entries.</dd>
+                      </dl>
+                    </div>
+
+                    <div>
+                      <h2>PhyloCanvas.History</h2>
+                      <p>The history panel of sub-trees
+                      <h4>Properties</h4>
+                      <dl class="dl-horizontal">
+                        <dt>tree</dt>
+                          <dd>reference to the tree object</dd>
+
+                        <dt>div</dt>
+                          <dd>the dive containing the history</dd>
+
+                        <dt>elements</dt>
+                          <dd>Menu choices, an array of dictionaries with properties
+                            <dl class="arguments">
+                              <dt>text</dt>
+                                <dd>The label of the menu item</dd>
+
+                              <dt>handler</dt>
+                                <dd>The function in the Tree object that the menu item invokes. If
+                                a node has been clicked on it is padded to the handler</dd>
+
+                              <dt>internal</dt>
+                                <dd>Does this function apply to an internal node</dd>
+
+                              <dt>leaf</dt>
+                                <dd>Does this function apply to a leaf</dd>
+                            </dl>
+                          </dd>
+                      </dl>
+
+                      <h4>Functions</h4>
+                      <dl class="dl-horizontal">
+                        <dt>close()</dt>
+                          <dd>close the context menu</dd>
+
+                        <dt>mouseover</dt>
+                        <dt>mouseout</dt>
+                          <dd>hover functions</dd>
+
+                        <dt>open(x,y)</dt>
+                          <dd>Open the menu at position x,y</dd>
+                      </dl>
+-->                    </div>
+                </section>
+                <section id="code_samples">
+                  <h1> Code Samples </h1>
+                  <hr>
+                  <p> This page includes live examples on how to use the functionalities of PhyloCanvas </p>
+                  <ul>
+                    <li><a href="#cs_draw_tree">Draw Tree</a></li>
+                    <li><a href="#">Draw Label</a></li>
+                    <li><a href="#">Draw Node</a></li>
+                    <li><a href="#">Redraw Subtree</a></li>
+                    <li><a href="#">Show/Hide Labels</a></li>
+                    <li><a href="#">Collapse/Expand</a></li>
+                    <li><a href="#">Rotate Branch</a></li>
+                  </ul>
+                  <div id="cs_draw_tree" class="section">
+                    <h3>Draw Tree</h3>
+                      <pre class="code">
+  var phylocanvas = new PhyloCanvas.Tree(<i>div_name</i>, <i>[config object]</i>); // initialize your tree viewer
+
+  phylocanvas.load(<i>newick_file</i>); // load your tree file</pre>
+                    <p></p>
+                    <h3>Redraw Subtree</h3>
+<pre>
+        redrawFromBranch: function(node) {
+        }
+</pre>
+                    <p></p>
+                    <h3>Show/Hide Labels</h3>
+                    <p></p>
+                    <h3>Collapse/Expand</h3>
+                    <p></p>
+                    <h3>Rotate Branch</h3>
+                    <p></p>
+                  </div>
+                </section>
+              </div>
+            </div>
+        </div>
+
+
+        <a id="fork" target="_blank" href="https://github.com/CIPowell/PhyloCanvas"><img src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+
+    </body>
+</html>
