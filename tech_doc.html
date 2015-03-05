@@ -1,0 +1,23 @@
+                <section id="tech_doc">
+                  <h1> Technical Documentation </h1><hr>
+                  <h3>Code Structure</h3>
+                  <p>The PhyloCanvas code is Object-oriented and uses the prototype
+                    of a JavaScript "class" to describe the class functions.<p>
+
+                  <p>As well as providing an organisational structure for the code, using
+                  the prototype means that the code for the functions isn't copied into memory
+                  for each instance of PhyloCanvas.</p>
+
+                  <h3>Rendering</h3>
+                  <p>The rendering engine for PhyloCanvas is designed
+                    to minimise the amount of load that is placed on the client browser.
+                    As such the rendering events only fire when the user performs an action
+                    such as zooming or panning through the tree.
+                  </p>
+                  <p>The rendering itself is split into 2 phases, a pre-render to
+                    perform all the calculations related to determining the postion
+                    and layout of the tree, leaving only the actual drawing of the tree
+                    at the correct positon (offset) and zoom level. </p>
+                  <p>When a subtree of the main tree is redrawn from a branch or
+                  a branch is rotated the tree reset and then pre-render must be re-run.</p>
+                </section>

@@ -1,0 +1,41 @@
+                <section id="getting_started">
+                  <h1>How to use</h1>
+                  <hr>
+                  <div id="initialize">
+                      <h3>Get PhyloCanvas</h3>
+                      <p>There are a couple of ways to include PhyloCanvas in your project, using bower or cloning directly from github.
+
+                      <h3>Bower</h3>
+                      <pre class="code">$ bower install --save PhyloCanvas</pre>
+
+                      <p>Then you need to include</p>
+
+                      <pre class="code">
+&lt;link rel="stylesheet" type="text/css" href="/bower_components/PhyloCanvas/src/styles/PhyloCanvas.css"&gt;
+
+&lt;script type="application/javascript" src="/bower_components/PhyloCanvas/src/scripts/PhyloCanvas.js"&gt;&lt;/script&gt</pre>
+                      
+                      <h3>GitHub</h3>
+                      <pre class="code">$ git clone https://github.com/ImpericalCollegeLondon/PhyloCanvas.git</pre>
+
+                      <pre class="code">
+&lt;link rel="stylesheet" type="text/css" href="/PhyloCanvas/src/styles/PhyloCanvas.css"&gt;
+
+&lt;script type="application/javascript" src="/PhyloCanvas/src/scripts/PhyloCanvas.js"&gt;&lt;/script&gt</pre>
+
+                      <p>Remember to adjust the URL to suit the location of the PhyloCanvas code within your project</p>
+
+                      <h3>Initializing</h3>
+                      <p>You only need 2 lines of code to get your phylocanvas instance up and running. 
+                        <ul class="circle">
+                          <li>One to initialize the viewer and </li>
+                          <li>Second to load the file. </li>
+                        </ul>
+                      </p>
+                      <pre class="code">
+  var phylocanvas = new PhyloCanvas.Tree(<i>div_name</i>, <i>[config object]</i>); // initialize your tree viewer
+
+  phylocanvas.load(<i>newick_file</i>); // load your tree file</pre>
+                  </div>
+                  <a href="http://jsbin.com/zekobemale/8/edit?html,js,output" target="_blank">View example</a>
+                </section>

@@ -1,7 +1,7 @@
 body{
 	font-family: 'Roboto', sans-serif;
 	font-size: 16px;
-    font-weight: 100;
+    font-weight: 400;
 	line-height:20pt;
 	max-width:none;
 	/* Move down content because we have a fixed navbar that is 50px tall */
@@ -15,12 +15,12 @@ body{
 }
 
 h1{
-	line-height:53pt
+	line-height: 53pt;
+    font-weight: 300;
+	font-size:2.8em;
+	text-shadow:none;
 }
-h1{
-	font-size:2.5em;
-	text-shadow:none
-}
+
 h1.pageheader{font-size:3.5em;border-bottom:1px solid #CCC;text-shadow:-1px 1px #eee,1px 1px #aaa}
 .light{font-weight:100;}
 p.question{font-size:18pt;font-weight:100;line-height:22pt}
@@ -28,10 +28,12 @@ p.question:before{display:inline-block;font-size:30pt;color:#CCC;content:'* ';fo
 p.answer{padding: 5px 80px;line-height:18pt;text-align:left}
 h2{
     font-size:2.0em;
-    text-shadow:none
+    text-shadow:none;
+    font-weight: 400;
 }
 h3{
-    font-size:1.5em;
+    font-size:1.8em;
+    font-weight: 300;
     text-shadow:none;
     line-height: 1.8em;
     border-bottom: 1px solid #eee;
@@ -48,7 +50,13 @@ h4{
 p{
 	margin: 20px 0px;
 }
-
+.navbar {
+    margin: 0px;
+}
+.container {
+    /*margin-top: 20px;*/
+    /*width: 80%;*/
+}
 #accordion_menu {
     background-image:url('../img/Epicollect.png');
     background-size: 40px;
@@ -63,13 +71,18 @@ p{
 ul {
     list-style: none;
     margin: 0px;
-    padding-left: 5px;
-    margin-left: 10px;
+    padding-left: 0px;
+    margin-left: 0px;
+}
+ul ul a{
+    font-size: 0.9em;
+}
+ul a:hover{
 }
 ul.circle {
-    list-style-type: circle;
-    padding-left: 5px;
-    margin-left: 30px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    margin-left: 10px;
 }
 #accordion_menu ul {
     list-style: none;
@@ -92,20 +105,22 @@ ul.circle {
     text-decoration: none;
     background-image:url('../img/arrows.gif');
     background-repeat: no-repeat;
-    background-position: right 7px;
+    background-position: right 6px;
 }
 
 #fork{
     z-index:999999;
+    float: right;
     position: absolute; 
-    top: 50px; 
+    /*top: 50px; */
     right: 0; 
     border: 0;
-    position: fixed;   
+    /*position: fixed;   */
 }
 .stick {
     position:fixed !important;
     top:0px !important;
+    right: 0px;
 }
 #overview iframe{ 
     width: 100%;
@@ -120,34 +135,68 @@ ul.circle {
 }
 
 dl {
+    font-weight: 400;
+    font-size: 0.9em;
     /*font-size: 0.9em;*/
+    background: #f6f6f6;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin: 5px 0px;
 }
 dl dt{
-    padding: 5px 0px;
-    letter-spacing: 1px;
+    padding: 4px 0px;
+    font-weight: 400;
     /*margin: 5px;*/
     color: #017D98;
-    /*color: #fff;*/
 }
 dl dd {
-    padding: 5px 0px;
+    padding: 4px 0px;
 }
 
 dl.arguments {
-    font-size: 80%;
-    background: #eef;
+    font-size: 0.90em;
+    background: #f7f7fb;
 }
 dl.arguments dt{
     padding: 10px 0px 0 5px;
-    color: #515;
+    color: #3f007d;
+    font-weight: 400;
 }
 dl.arguments dt:after{display:inline-block;content:': ';}
 dl.arguments dd{
-    padding: 5px 10px;
+    padding: 5px 5px 5px 20px;
     border-bottom: 10px solid #fff;
+    font-weight: 400;
 }
-.properties td:first-child{
-    color: #017D98;
+table.properties td:first-child{
+    color: #54278f;
     min-width: 150px;
 }
+table.properties tr:first-child{
+    background: #efedf5;
+}
+table.properties th {
+    font-weight: 400;
+    font-size: 1em;
+    color: #3f007d;
+}
 
+table.properties {
+    font-size: 0.95em;
+}
+#pc-buttons button{
+    margin: 10px 0px;
+    /*font-weight: 300!important;*/
+}
+a.gotop{
+    float: right;
+    font-size: 0.7em;
+    padding: 2px 5px;
+    line-height: 14px;
+    margin: 35px 0px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+}
+.gotop:hover {
+    background: #dadaeb;
+}

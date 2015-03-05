@@ -3012,6 +3012,7 @@ var PhyloCanvas = (function() {
      * @return 
      */
     Tree.prototype.resizeToContainer = function() {
+        console.log(this.canvasEl.offsetWidth, this.canvasEl.offsetHeight)
         this.setSize(this.canvasEl.offsetWidth, this.canvasEl.offsetHeight)
         this.draw();
         this.history.resizeTree();

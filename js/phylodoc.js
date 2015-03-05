@@ -1,8 +1,7 @@
 
 $(document).ready(function(){
-
-	createOverviewTree();
 	$('#accordion_menu li a').on('click', function(){
+		loadTemplate(this);
 		$('#content section').hide();
 		$('#content section#'+$(this).attr('data-id')).show();
 		$('#accordion_menu li a').removeClass('active');
@@ -30,10 +29,47 @@ $(document).ready(function(){
 	show('overview');
 })
 
+var html_data = {};
+/***** Function to load content on menu click *****/
+var loadTemplate = function(ele) {
+    if(!$(ele).length) {
+        var url= ele + '.html';
+        //alert(url);
+        $('#content').load(url);
+        $('html, body').animate({ scrollTop: 0 }, 'slow');
+        return;
+    }
+  
+    var _id = $(ele).attr('data-id');
+    var url= _id + '.html';
+
+    if(html_data[_id]) {
+    	$('#content').html('');
+    	$('#content').append(html_data[_id]);
+        // phylocanvas.resizeToContainer();
+    }
+    else {
+	    $('#content').load(url, function (responseText, textStatus, req) {
+	        if (textStatus == "error") {
+	          $('#content').html('<h2><i class="fa fa-thumbs-o-down oblue"></i>This page is currently not available. Please try after some time</h2>');
+	          return;
+	        }
+
+		    if(_id == "overview") {
+				createOverviewTree();
+		    }
+
+		    html_data[_id] = $('#content section');
+	    });
+	}
+    
+}
 function show(div_id) {
-	$('#'+div_id).show();
-	$('#accordion_menu li a').removeClass('active');
-	$('#accordion_menu li a[data-id="'+div_id+'"]').addClass('active');
+	$('#accordion_menu li').find("[data-id="+div_id+"]").click();
+
+	// $('#'+div_id).show();
+	// $('#accordion_menu li a').removeClass('active');
+	// $('#accordion_menu li a[data-id="'+div_id+'"]').addClass('active');
 }
 
 var phylocanvas;
@@ -90,6 +126,9 @@ function colour(response){
 }
 
 
-$(document).on('click','.btn', {} ,function(e){
+$(document).on('click','#pc-buttons .btn', {} ,function(e){
+    $('#pc-buttons .btn').removeClass('btn-info');
+    $('#pc-buttons .btn').addClass('btn-default');
+    $(this).addClass('btn-info');
 	phylocanvas.setTreeType(this.id);
 })
