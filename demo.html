@@ -6,9 +6,10 @@
 
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <link href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+
     <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/styles/PhyloCanvas.css" />
-
-
     <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script>
     <style>
       body {
@@ -16,12 +17,23 @@
       }
 
       #phylocanvas {
-        width: 500px;
-        height: 300px;
+        width: 600px;
+        height: 500px;
+        border: 1px solid #ccc;
       }
 
       #pc-buttons{
-        margin: 10px 0px;
+        padding: 0px 20px;
+        height: 500px;
+        overflow: auto;
+        border: 1px solid #ccc;
+      }
+      p{
+        margin-top: 15px;
+        color: #007aa3;
+      }
+      .row div {
+        padding: 0px;
       }
     </style>
 
@@ -29,33 +41,92 @@
       $(document).ready(function(){
 
         // Construct tree object
-        phylocanvas = new PhyloCanvas.Tree('phylocanvas');
+        phylocanvas = new PhyloCanvas.Tree('phylocanvas', { historyCollapsed: true});
         phylocanvas.setTreeType('rectangular');
         var newick_str = "((1:0.133,(2:0.044,3:0.044):0.089):0.415,(9:0.408,(12:0.141,(8:0.103,(7:0.014,11:0.014):0.090):0.038):0.266):0.141):3.678);";
 
         phylocanvas.load(newick_str);
-        // For each branches, if beanch id = pcn4, then collpase that branch
-        for (var k in phylocanvas.branches) {
-          node = phylocanvas.branches[k];
-          if(node.id == "pcn4" && !node.leaf) {
-            node.collapsed = true;
-          }
-        }
-        phylocanvas.draw();
 
 
-      $(document).on('click','#pc-buttons .btn', {} ,function(e){
-          $('#pc-buttons .btn').removeClass('btn-info');
-          $('#pc-buttons .btn').addClass('btn-default');
-          $(this).addClass('btn-info');
+        $(document).on('click','#pc-buttons .btn', {} ,function(e){
+            $('#pc-buttons .btn').removeClass('btn-info');
+            $('#pc-buttons .btn').addClass('btn-default');
+            $(this).addClass('btn-info');
+            if(this.id == "rectangular" || this.id == "circular" || this.id == "diagonal" || this.id == "hierarchy" || this.id == "radial" )
+              phylocanvas.setTreeType(this.id);
+            else if(this.id == "hide")
+              phylocanvas.hideLabels();
+            else if(this.id == "show")
+              phylocanvas.displayLabels();
+            else if(this.id == "toggle")
+              phylocanvas.toggleLabels();
+            else if(this.id == "redraw") {
+              // For each branches, if branch id = pcn4, then collpase that branch
+              var redraw_branch = null;
+              for (var k in phylocanvas.branches) {
+                branch = phylocanvas.branches[k];
+                if(branch.id == "pcn5" && !branch.leaf) {
+                  redraw_branch = branch;
+                }
+              }
+              redraw_branch.redrawTreeFromBranch();
+            }
+            else if(this.id == "revert_redraw") {
+              phylocanvas.origRoot.redrawTreeFromBranch();
+            }
+            else if(this.id == "nodeColorTrue") {
+              phylocanvas.backColour = false;
+              phylocanvas.setNodeColourAndShape("1,2,3", 'orange', 'o', 5);
+            }
+            else if(this.id == "nodeColorFalse") {
+              phylocanvas.backColour = false;
+              phylocanvas.setNodeColourAndShape("1,2,3", 'black', 'o', 1);
+            }
+            else if(this.id == "branchColorTrue") {
+              phylocanvas.backColour = true;
+              phylocanvas.setNodeColourAndShape('1', "rgb(20,120,250)", "x", 5);
+              phylocanvas.setNodeColourAndShape('2', "rgb(250,120,20)", "t", 5);
+              phylocanvas.setNodeColourAndShape('9', "rgb(120,20,250)", "s", 5);
+            }
+            else if(this.id == "branchColorFalse") {
+              phylocanvas.backColour = false;
+              phylocanvas.setNodeColourAndShape('1', "black", "o", 1);
+              phylocanvas.setNodeColourAndShape('2', "black", "o", 1);
+              phylocanvas.setNodeColourAndShape('9', "black", "o", 1);
+            }
+            phylocanvas.draw();
+        });
 
-          if(this.id == "hide")
-            phylocanvas.hideLabels();
-          else
-            phylocanvas.displayLabels();
-      });
+        $(".slider_node").slider({
+                    range: "min",
+                    value: 1,
+                    min: 1,
+                    max: 10,
+                    slide: function(event, ui) {
+                      phylocanvas.setNodeSize(ui.value);
+                    }
+                });
 
+                $(".slider_text").slider({
+                    range: "min",
+                    value: 1,
+                    min: 1,
+                    max: 10,
+                    slide: function(event, ui) {
+                      phylocanvas.setTextSize(ui.value + 10);
+                    }
+                });
 
+                $(".slider_both").slider({
+                    range: "min",
+                    value: 1,
+                    min: 1,
+                    max: 10,
+                    slide: function(event, ui) {
+                      phylocanvas.setNodeSize(ui.value);
+                      phylocanvas.setTextSize(ui.value + 10);
+                    }
+                });
 
       })
     </script>
@@ -63,12 +134,52 @@
   </head>
 
   <body>
-    <div id="pc-buttons">
-      <p> Click buttons below to show / hide labels </p>
-      <button id="show" class="btn btn-info btn-sm">Show</button>
-      <button id="hide" class="btn btn-default btn-sm">Hide</button>
-    </div>
+    <div class="contaxiner">
+      <h2>PhyloCanvas Examples</h2>
+      <hr>
+      <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3">
+          <div id="pc-buttons">
+            <p> Click buttons below to change the tree type </p>
+            <button id="rectangular" class="btn btn-info btn-xs">Rectangular</button>
+            <button id="circular" class="btn btn-default btn-xs">Circular</button>
+            <button id="radial" class="btn btn-default btn-xs">Radial</button>
+            <button id="diagonal" class="btn btn-default btn-xs">Diagonal</button>
+            <button id="hierarchy" class="btn btn-default btn-xs">Hierarchical</button>
+            <hr>
+            <p> Click buttons below to show / hide labels </p>
+            <button id="show" class="btn btn-default btn-xs">Show</button>
+            <button id="hide" class="btn btn-default btn-xs">Hide</button>
+            <button id="toggle" class="btn btn-default btn-xs">Toggle</button>
+            <hr>
 
-    <div id="phylocanvas" ></div>
+            <p> Use slider to increase/decrease node size </p>
+            Node size: <div class="slider slider_node"></div>
+            Text size: <div class="slider slider_text"></div>
+            Both: <div class="slider slider_both"></div>
+            <hr>
+
+            <p> Click buttons below to color node</p>
+            <button id="nodeColorTrue" class="btn btn-default btn-xs">Color Node</button>
+            <button id="nodeColorFalse" class="btn btn-default btn-xs">Revert</button>
+            <hr>
+
+            <p> Click buttons below to try branch coloring</p>
+            <button id="branchColorTrue" class="btn btn-default btn-xs">Color Branch</button>
+            <button id="branchColorFalse" class="btn btn-default btn-xs">Revert</button>
+            <hr>
+
+            <p> Click buttons below to redraw a subtree </p>
+            <button id="redraw" class="btn btn-default btn-xs">Redraw</button>
+            <button id="revert_redraw" class="btn btn-default btn-xs">Revert</button>
+            <hr>
+
+          </div>
+        </div>
+        <div class='col-lg-9 col-md-9 col-sm-9'>
+          <div id="phylocanvas" ></div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
