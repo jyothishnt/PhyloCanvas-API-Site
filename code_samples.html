@@ -3,32 +3,107 @@
                   <hr>
                   <p> This page includes live examples on how to use the functionalities of PhyloCanvas </p>
                   <ul>
-                    <li><a href="#cs_draw_tree">Draw Tree</a></li>
-                    <li><a href="#">Draw Label</a></li>
-                    <li><a href="#">Draw Node</a></li>
-                    <li><a href="#">Redraw Subtree</a></li>
-                    <li><a href="#">Show/Hide Labels</a></li>
-                    <li><a href="#">Collapse/Expand</a></li>
-                    <li><a href="#">Rotate Branch</a></li>
+                    <li><a href="#cs_loadATreeFile">Load Tree</a></li>
+                    <li><a href="#cs_setTreeType">Set Tree Type</a></li>
+                    <li><a href="#cs_showHideLabels">Show/Hide Labels</a></li>
+                    <li><a href="#cs_collapseExpand">Collapse/Expand</a></li>
+                    <li><a href="#cs_increaseNodeSize">Increase Node Size</a></li>
+                    <li><a href="#cs_ColorNodes">Color Nodes</a></li>
+                    <li><a href="#cs_backColour">Color Branches</a></li>
                   </ul>
-                  <div id="cs_draw_tree" class="section">
-                    <h3>Draw Tree</h3>
-                      <pre class="code">
+                  <div id="cs_loadATreeFile" class="section">
+                    <h3>Load Tree</h3>
+                    <p></p>
+                    <pre class="code">
   var phylocanvas = new PhyloCanvas.Tree(<i>div_name</i>, <i>[config object]</i>); // initialize your tree viewer
-
-  phylocanvas.load(<i>newick_file</i>); // load your tree file</pre>
-                    <p></p>
-                    <h3>Redraw Subtree</h3>
-<pre>
-        redrawFromBranch: function(node) {
-        }
-</pre>
-                    <p></p>
-                    <h3>Show/Hide Labels</h3>
-                    <p></p>
-                    <h3>Collapse/Expand</h3>
-                    <p></p>
-                    <h3>Rotate Branch</h3>
-                    <p></p>
+  phylocanvas.load(<i>newick</i>); // load your newick string or file</pre>
+                    <a class="showExample" data-height="250" data-href="http://jsbin.com/cekofo/6/embed?output">View live</a>
                   </div>
+
+                  <div id="cs_setTreeType">
+                    <h3>Set Tree Type</h3>
+                    <p></p>
+                    <pre>
+  phylocanvas.setTreeType('rectangular'); // Takes radial, rectangular, circular, diagonal and hierarchy</pre>
+                    <p class="cs_description"> A <code>typechanged</code> event is fired whenever a tree type is changed which invokes addSnapShot() to add a snapshot in the history. </p>
+                    <a class="showExample" data-height="450" data-href="http://jsbin.com/cekofo/19/embed?output">View live</a>
+
+                  <div id="cs_showHideLabels">
+                    <h3>Show/Hide Labels</h3>
+                    <p>To show or hide labels use the below functions</p>
+                    <pre>
+  phylocanvas.displayLabels(); // Show labels
+  phylocanvas.hideLabels(); // Hide labels
+  // or
+  phylocanvas.toggleLabels(); // Toggle labels</pre>
+                    <a class="showExample" data-height="450" data-href="http://jsbin.com/cekofo/61/embed?output">View live</a>
+                  </div>
+
+                  <div id="cs_collapseExpand">
+                    <h3>Collapse/Expand</h3>
+                    <p>Each <code>Branch</code> has <code>collapsed = true/false</code> property which is used while drawing the tree to see if the branch has to be collapsed or not.
+                      The example below shows how you traverse through each branch and collapse one that matches a branch id.
+                    </p>
+<pre>
+// For each branches, if beanch id = pcn4, then collpase that branch
+
+for (var key in phylocanvas.branches) {
+  node = phylocanvas.branches[key];
+  if (node.id == "pcn4" && !node.leaf) {
+    node.collapsed = true;
+  }
+}
+
+phylocanvas.draw();
+</pre>
+                    <a class="showExample" data-height="375" data-href="http://jsbin.com/cekofo/30/embed?output">View live</a>
+
+                  </div>
+                  <div id="cs_increaseNodeSize">
+                    <h3>Increase node / label size </h3>
+                    <p>Use<code>setNodeSize()</code> and <code>setTextSize()</code> to change the size of node and text.</p>
+                    <pre>
+phylocanvas.setNodeSize = 10;
+phylocanvas.setTextSize = 20;</pre>
+                    <a class="showExample" data-height="560" data-href="http://jsbin.com/cekofo/54/embed?output">View live</a>
+                  </div>
+
+                  <div id="cs_colorNodes">
+                    <h3>Color Nodes</h3>
+                    <p><code>setNodeColourAndShape</code> is used to set the color and shape of a node.<br>
+                    <dl class="dl-horizontal">
+                      <dt>nodeIds: (Array/String)</dt>
+                      <dd>Array / comma separated string.</dd>
+                      <dt>Color</dt>
+                      <dd>Color of the node in <b>rgb/hex/colornames</b> format Eg: red, rgb(255,0,0), #adadad </dd>
+                      <dt>Shapes</dt>
+                      <dd>
+                        <ul>
+                          <li>x = star</li>
+                          <li>s = square</li>
+                          <li>o = circle</li>
+                          <li>t = triangle</li>
+                        </ul>
+                      </dd>
+                      <dt>Size</dt>
+                      <dd>Size of the node </dd>
+                    </dl>
+                    <pre>
+phylocanvas.setNodeColourAndShape("1,2,3", 'orange', 'x');
+phylocanvas.draw(); </pre>
+                     <a class="showExample" data-height="375" data-href="http://jsbin.com/cekofo/39/embed?output">View live</a>
+                  </div>
+
+
+                  <div id="cs_backColour">
+                    <h3>Color Branches</h3>
+                    <p>Setting <code>backColour</code> to <code>true/false</code> will colour the branches of the tree based on the colour of the tips</p>
+<pre>
+phylocanvas.backColour = true;
+phylocanvas.setNodeColourAndShape('1', 'rgb(250, 150, 50)', 'x');
+phylocanvas.draw(); </pre>
+                     <a class="showExample" data-height="480" data-href="http://jsbin.com/cekofo/88/embed?output">View live</a>
+                  </div>
+
+
                 </section>

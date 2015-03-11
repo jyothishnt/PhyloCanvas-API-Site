@@ -2,31 +2,32 @@
 $(document).ready(function(){
 	$('#accordion_menu li a').on('click', function(){
 		loadTemplate(this);
-		$('#content section').hide();
-		$('#content section#'+$(this).attr('data-id')).show();
+		// $('#content section').hide();
+		// $('#content section#'+$(this).attr('data-id')).show();
 		$('#accordion_menu li a').removeClass('active');
 		$(this).addClass('active');
-		
+
 		if($(this).children('ul').length) {
 			$(this).children('ul').slideDown();
 		}
-	});	
+        // phylocanvas.resizeToContainer();
+	});
 
 	/**** For github fork stick on scroll ****/
 
 	var s = $("#fork");
-	var pos = s.position();					   
+	var pos = s.position();
 	$(window).scroll(function() {
 		var windowpos = $(window).scrollTop();
 		if (windowpos >= pos.top) {
 			s.addClass("stick");
 		} else {
-			s.removeClass("stick");	
+			s.removeClass("stick");
 		}
 	});
 
-	$('#content section').hide();
-	show('overview');
+	// $('#content section').hide();
+	show('code_samples');
 })
 
 var html_data = {};
@@ -39,14 +40,15 @@ var loadTemplate = function(ele) {
         $('html, body').animate({ scrollTop: 0 }, 'slow');
         return;
     }
-  
+
     var _id = $(ele).attr('data-id');
     var url= _id + '.html';
 
     if(html_data[_id]) {
     	$('#content').html('');
     	$('#content').append(html_data[_id]);
-        // phylocanvas.resizeToContainer();
+        if(phylocanvas)
+            phylocanvas.resizeToContainer();
     }
     else {
 	    $('#content').load(url, function (responseText, textStatus, req) {
@@ -62,7 +64,7 @@ var loadTemplate = function(ele) {
 		    html_data[_id] = $('#content section');
 	    });
 	}
-    
+
 }
 function show(div_id) {
 	$('#accordion_menu li').find("[data-id="+div_id+"]").click();
@@ -132,3 +134,35 @@ $(document).on('click','#pc-buttons .btn', {} ,function(e){
     $(this).addClass('btn-info');
 	phylocanvas.setTreeType(this.id);
 })
+
+$(document).on('click','.showExample', {}, function(e){
+    var ifr = document.createElement('iframe');
+    ifr.width = "100%";
+    ifr.height = $(this).attr('data-height');
+    ifr.src = $(this).attr('data-href');
+    // ifr.onload = function(){
+    //     setIframeHeight(this);
+    // }
+    $(this).html(ifr);
+
+})
+
+function setIframeHeight(ifrm) {
+    var doc = ifrm.contentWindow || ifrm.contentDocument.parentWindow;
+    console.log(doc)
+    ifrm.style.visibility = 'hidden';
+    ifrm.style.height = "10px"; // reset to minimal height ...
+    // IE opt. for bing/msn needs a bit added or scrollbar appears
+    ifrm.style.height = getDocHeight( doc ) + 4 + "px";
+    ifrm.style.visibility = 'visible';
+}
+
+function getDocHeight(doc) {
+    doc = doc || document;
+    // stackoverflow.com/questions/1145850/
+    var body = doc.body, html = doc.documentElement;
+    var height = Math.max( body.scrollHeight, body.offsetHeight,
+        html.clientHeight, html.scrollHeight, html.offsetHeight );
+    return height;
+}
+

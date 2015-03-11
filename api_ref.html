@@ -384,7 +384,7 @@
                           <td>Functions that enable the drawing of different tree structures. Default
                             branchRenderers are radial, rectangular, circular, diagonal, hierarchy </td>
                         </tr>
-                        
+
                         <tr>
                           <td>buildLeaves</td>
                           <td></td>
@@ -758,7 +758,23 @@
                           </td>
                           <td>Change the node colour and/or shape, optional arguments must be replaced
                             by null or undefined if subsequent arguments are set. All the parameters are optional except nodeIds.
-
+                            <dl class="dl-horizontal">
+                              <dt>nodeIds: (Array/String)</dt>
+                              <dd>Array / comma separated string.</dd>
+                              <dt>Color</dt>
+                              <dd>Color of the node in <b>rgb/hex/colornames</b> format Eg: red, rgb(255,0,0), #adadad </dd>
+                              <dt>Shapes</dt>
+                              <dd>
+                                <ul>
+                                  <li>x = star</li>
+                                  <li>s = square</li>
+                                  <li>o = circle</li>
+                                  <li>t = triangle</li>
+                                </ul>
+                              </dd>
+                              <dt>Size</dt>
+                              <dd>Size of the node </dd>
+                            </dl>
                           </td>
                         </tr>
 
@@ -877,7 +893,7 @@
                       <a href="#api_ref" class='gotop'>Top</a>
                       <h2>Events</h2></a>
                       <p>PhyloCanvas exposes a number of events that allow web pages to change according to activity within PhyoCanvas. The API also exposes a couple of helper methods to enable binding of events to the API.</p>
-                      
+
                       <h3>Helper Methods</h3>
                       <table class="table table-striped properties">
                         <tr>
