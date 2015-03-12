@@ -77,7 +77,7 @@ function show(div_id) {
 var phylocanvas;
 function createOverviewTree() {
     // Construct tree object
-    phylocanvas = new PhyloCanvas.Tree('phylocanvas', { history_collapsed : true });
+    phylocanvas = new PhyloCanvas.Tree('phylocanvas', { historyCollapsed : true });
     phylocanvas.showLabels = true;
     phylocanvas.hoverLabel = true;
     phylocanvas.setTreeType('circular');

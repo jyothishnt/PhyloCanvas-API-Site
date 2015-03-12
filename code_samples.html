@@ -8,9 +8,13 @@
                     <li><a href="#cs_showHideLabels">Show/Hide Labels</a></li>
                     <li><a href="#cs_collapseExpand">Collapse/Expand</a></li>
                     <li><a href="#cs_increaseNodeSize">Increase Node Size</a></li>
-                    <li><a href="#cs_ColorNodes">Color Nodes</a></li>
+                    <li><a href="#cs_colorNodes">Color Nodes</a></li>
                     <li><a href="#cs_backColour">Color Branches</a></li>
+                    <li><a href="#cs_rotateBranch">Rotate Branch</a></li>
+                    <li><a href="#cs_search">Search Highlight</a></li>
+
                   </ul>
+                  <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_loadATreeFile" class="section">
                     <h3>Load Tree</h3>
                     <p></p>
@@ -20,6 +24,7 @@
                     <a class="showExample" data-height="250" data-href="http://jsbin.com/cekofo/6/embed?output">View live</a>
                   </div>
 
+                  <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_setTreeType">
                     <h3>Set Tree Type</h3>
                     <p></p>
@@ -27,7 +32,9 @@
   phylocanvas.setTreeType('rectangular'); // Takes radial, rectangular, circular, diagonal and hierarchy</pre>
                     <p class="cs_description"> A <code>typechanged</code> event is fired whenever a tree type is changed which invokes addSnapShot() to add a snapshot in the history. </p>
                     <a class="showExample" data-height="450" data-href="http://jsbin.com/cekofo/19/embed?output">View live</a>
+                  </div>
 
+                  <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_showHideLabels">
                     <h3>Show/Hide Labels</h3>
                     <p>To show or hide labels use the below functions</p>
@@ -39,28 +46,24 @@
                     <a class="showExample" data-height="450" data-href="http://jsbin.com/cekofo/61/embed?output">View live</a>
                   </div>
 
+                  <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_collapseExpand">
                     <h3>Collapse/Expand</h3>
                     <p>Each <code>Branch</code> has <code>collapsed = true/false</code> property which is used while drawing the tree to see if the branch has to be collapsed or not.
                       The example below shows how you traverse through each branch and collapse one that matches a branch id.
                     </p>
 <pre>
-// For each branches, if beanch id = pcn4, then collpase that branch
-
-for (var key in phylocanvas.branches) {
-  node = phylocanvas.branches[key];
-  if (node.id == "pcn4" && !node.leaf) {
-    node.collapsed = true;
-  }
-}
-
+// Here 'pcn5' is the branch id
+phylocanvas.branches['pcn5'].collapsed = true;
 phylocanvas.draw();
 </pre>
-                    <a class="showExample" data-height="375" data-href="http://jsbin.com/cekofo/30/embed?output">View live</a>
+                    <a class="showExample" data-height="510" data-href="http://jsbin.com/cekofo/100/embed?output">View live</a>
 
                   </div>
+
+                  <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_increaseNodeSize">
-                    <h3>Increase node / label size </h3>
+                    <h3>Increase Node / Label Size </h3>
                     <p>Use<code>setNodeSize()</code> and <code>setTextSize()</code> to change the size of node and text.</p>
                     <pre>
 phylocanvas.setNodeSize = 10;
@@ -68,6 +71,7 @@ phylocanvas.setTextSize = 20;</pre>
                     <a class="showExample" data-height="560" data-href="http://jsbin.com/cekofo/54/embed?output">View live</a>
                   </div>
 
+                  <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_colorNodes">
                     <h3>Color Nodes</h3>
                     <p><code>setNodeColourAndShape</code> is used to set the color and shape of a node.<br>
@@ -94,7 +98,7 @@ phylocanvas.draw(); </pre>
                      <a class="showExample" data-height="375" data-href="http://jsbin.com/cekofo/39/embed?output">View live</a>
                   </div>
 
-
+                  <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_backColour">
                     <h3>Color Branches</h3>
                     <p>Setting <code>backColour</code> to <code>true/false</code> will colour the branches of the tree based on the colour of the tips</p>
@@ -105,5 +109,35 @@ phylocanvas.draw(); </pre>
                      <a class="showExample" data-height="480" data-href="http://jsbin.com/cekofo/92/embed?output">View live</a>
                   </div>
 
+
+                  <a href="#code_samples" class='gotop'>Top</a>
+                  <div id="cs_rotateBranch">
+                    <h3>Rotate Branch</h3>
+                    <p>Use the branch function <code>rotate()</code> to rotate a branch.</p>
+<pre>
+// Here 'pcn5' is the branch id
+phylocanvas.branches['pcn5'].rotate(event);
+phylocanvas.draw();</pre>
+                     <a class="showExample" data-height="480" data-href="http://jsbin.com/cekofo/105/embed?output">View live</a>
+                  </div>
+
+                </section>
+
+                  <a href="#code_samples" class='gotop'>Top</a>
+                  <div id="cs_search">
+                    <h3>Search Highlight</h3>
+                    <p>Search could be done using the Tree function <code>findBranch()</code> to rotate a branch.</p>
+<pre>
+phylocanvas.findBranch(<i>value</i>);  // <i>value</i> = search pattern </pre>
+
+                    <p class="cs_description">
+                      The above function uses <code>Branch.setSelected()</code> to highlight the branch
+                      For example, the below code makes <code>Branch.selected = false</code> for all children of root.
+                    </p>
+<pre>
+phylocanvas.root.setSelected(false, true);
+phylocanvas.draw();</pre>
+                     <a class="showExample" data-height="480" data-href="http://jsbin.com/cekofo/108/embed?output">View live</a>
+                  </div>
 
                 </section>
