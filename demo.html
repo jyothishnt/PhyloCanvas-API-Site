@@ -17,7 +17,7 @@
       }
 
       #phylocanvas {
-        width: 600px;
+        width: 700px;
         height: 500px;
         border: 1px solid #ccc;
       }
@@ -41,12 +41,11 @@
       $(document).ready(function(){
 
         // Construct tree object
-        phylocanvas = new PhyloCanvas.Tree('phylocanvas', { historyCollapsed: true});
+        phylocanvas = new PhyloCanvas.Tree('phylocanvas', {historyCollapsed: false});
         phylocanvas.setTreeType('rectangular');
         var newick_str = "((1:0.133,(2:0.044,3:0.044):0.089):0.415,(9:0.408,(12:0.141,(8:0.103,(7:0.014,11:0.014):0.090):0.038):0.266):0.141):3.678);";
 
         phylocanvas.load(newick_str);
-
 
         $(document).on('click','#pc-buttons .btn', {} ,function(e){
             $('#pc-buttons .btn').removeClass('btn-info');

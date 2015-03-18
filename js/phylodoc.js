@@ -136,15 +136,28 @@ $(document).on('click','#pc-buttons .btn', {} ,function(e){
 })
 
 $(document).on('click','.showExample', {}, function(e){
-    var ifr = document.createElement('iframe');
-    ifr.width = "100%";
-    ifr.height = $(this).attr('data-height');
-    ifr.src = $(this).attr('data-href');
-    // ifr.onload = function(){
-    //     setIframeHeight(this);
-    // }
-    $(this).html(ifr);
-
+    if($(this).html() == "View live") {
+      console.log($(this).next('#jsbin_example').length);
+        $(this).next('#jsbin_example').show();
+        if($(this).next('#jsbin_example').length <= 0) {
+            var ifr = document.createElement('iframe');
+            ifr.width = "100%";
+            ifr.height = $(this).attr('data-height');
+            ifr.src = $(this).attr('data-href');
+            var div = document.createElement('div');
+            div.id = "jsbin_example";
+            div.appendChild(ifr);
+            $(div).insertAfter($(this));
+        }
+        else {
+          $(this).next('#jsbin_example').show();
+        }
+        $(this).html('Hide');
+    }
+    else {
+      $(this).next('#jsbin_example').hide();
+      $(this).html('View live');
+    }
 })
 
 function setIframeHeight(ifrm) {

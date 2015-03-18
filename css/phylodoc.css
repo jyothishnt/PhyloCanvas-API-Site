@@ -50,6 +50,9 @@ h4{
 p{
 	margin: 20px 0px;
 }
+pre {
+    line-height: 1.8em;
+}
 .navbar {
     margin: 0px;
 }

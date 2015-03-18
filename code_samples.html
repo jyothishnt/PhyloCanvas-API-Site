@@ -17,11 +17,21 @@
                   <a href="#code_samples" class='gotop'>Top</a>
                   <div id="cs_loadATreeFile" class="section">
                     <h3>Load Tree</h3>
+                    <p class="title"> Using Newick string <p>
                     <p></p>
+                    <pre>
+  var phylocanvas = new PhyloCanvas.Tree(<i>div_name</i>, <i>[config object]</i>); // initialize your tree viewer
+  var newick_str = "(A:0.1,B:0.2,(C:0.3,D:0.4)E:0.5)F;"
+  phylocanvas.load(<i>newick_str</i>); // load your newick string or file</pre>
+                    <a class="showExample" data-height="375" data-href="http://jsbin.com/jepuqi/2/embed?output">View live</a>
+
+                    <p class="title"> Using Newick file <p>
                     <pre class="code">
   var phylocanvas = new PhyloCanvas.Tree(<i>div_name</i>, <i>[config object]</i>); // initialize your tree viewer
-  phylocanvas.load(<i>newick</i>); // load your newick string or file</pre>
-                    <a class="showExample" data-height="375" data-href="http://jsbin.com/jepuqi/1/embed?output">View live</a>
+  var newick_file = "<path to your tree file>";
+  phylocanvas.load(<i>newick_file</i>); // load your newick string or file</pre>
+                    <a class="" target="_blank" href="https://raw.githubusercontent.com/jyothishnt/PhyloCanvas-API-Site/master/data/tree.nwk">View Newick File</a> |
+                    <a class="showExample" data-height="375" data-href="http://jsbin.com/teqero/2/embed?output">View live</a>
                   </div>
 
                   <a href="#code_samples" class='gotop'>Top</a>
@@ -31,7 +41,7 @@
                     <pre>
   phylocanvas.setTreeType('rectangular'); // Takes radial, rectangular, circular, diagonal and hierarchy</pre>
                     <p class="cs_description"> A <code>typechanged</code> event is fired whenever a tree type is changed which invokes addSnapShot() to add a snapshot in the history. </p>
-                    <a class="showExample" data-height="450" data-href="http://jsbin.com/pofuwu/1/embed?output">View live</a>
+                    <a class="showExample" data-height="450" data-href="http://jsbin.com/pofuwu/3/embed?output">View live</a>
                   </div>
 
                   <a href="#code_samples" class='gotop'>Top</a>
@@ -137,7 +147,7 @@ phylocanvas.findBranch(<i>value</i>);  // <i>value</i> = search pattern </pre>
 <pre>
 phylocanvas.root.setSelected(false, true);
 phylocanvas.draw();</pre>
-                     <a class="showExample" data-height="480" data-href="http://jsbin.com/dazuzu/8/embed?output">View live</a>
+                     <a class="showExample" data-height="480" data-href="http://jsbin.com/dazuzu/11/embed?output">View live</a>
                   </div>
 
                 </section>
