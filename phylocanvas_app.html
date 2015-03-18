@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PhyloCanvas</title>
+
+        <meta name="viewport" content="width=device-width" />
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <link rel="icon" type="image/png"  href="img/EpiCollect.png">
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/styles/PhyloCanvas.css" />
+        <!-- <link href='http://fonts.googleapis.com/css?family=News+Cycle' rel='stylesheet' type='text/css'> -->
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,300,700,500,100' rel='stylesheet' type='text/css'>
+		    <link href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="css/phylocanvas_app.css">
+    </head>
+    <body>
+
+	    <nav class="navbar navbar-inverse navbar-static-top">
+	      <div class="container">
+	        <div class="navbar-header">
+	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+	            <span class="sr-only">Toggle navigation</span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	            <span class="icon-bar"></span>
+	          </button>
+
+	          <a class="navbar-brand" href="#">Phylocanvas</a>
+	        </div>
+	        <div id="navbar" class="navbar-collapse collapse">
+
+	          <form class="navbar-form navbar-right">
+	            <div class="form-group">
+	              <input type="text" placeholder="search" class="form-control">
+	            </div>
+	            <button type="submit" class="btn btn-success">Search</button>
+	          </form>
+	        </div><!--/.navbar-collapse -->
+	      </div>
+	    </nav>
+			<section id="drag-and-drop">
+				<div class="container">
+					<button type="button" class="btn btn-xs btn-danger pull-right" data-toggle="collapse" data-target=".pc-buttons">
+					  Tools
+					</button>
+					<div class="clear"></div>
+					<div class="pc-buttons collapse">
+						<div class="pc-buttons-title">Tools</div>
+						<div class="row">
+	          	<!-- <div class="toggle"><</div> -->
+	          	<div class="col-lg-3 col-md-3">
+		            <p>Change Tree Type </p>
+		            <button id="rectangular" class="btn btn-info btn-xs">Rectangular</button>
+		            <button id="circular" class="btn btn-default btn-xs">Circular</button>
+		            <button id="radial" class="btn btn-default btn-xs">Radial</button>
+		            <button id="diagonal" class="btn btn-default btn-xs">Diagonal</button>
+		            <button id="hierarchy" class="btn btn-default btn-xs">Hierarchical</button>
+		          </div>
+		          <div class="col-lg-3 col-md-3">
+		            <p>Show/Hide Labels </p>
+		            <button id="show" class="btn btn-default btn-xs">Show</button>
+		            <button id="hide" class="btn btn-default btn-xs">Hide</button>
+		            <button id="toggle" class="btn btn-default btn-xs">Toggle</button>
+		          </div>
+		          <div class="col-lg-3 col-md-3">
+		            <p>Node Size </p>
+		            Node size: <div class="slider slider_node"></div>
+		            Text size: <div class="slider slider_text"></div>
+		            Both: <div class="slider slider_both"></div>
+		          </div>
+		          <div class="col-lg-3 col-md-3">
+		            <p>Search </p>
+		            <input type="text" id="searchbox">
+		          </div>
+	          </div>
+	        </div>
+				</div>
+			  <div id="filedrag">
+			  	<div id="phylocanvas"></div>
+			  </div>
+			  <p id="messages"></p>
+			  <p class="center info">Drag and drop your newick tree file on to the drop zone above</p>
+			</section>
+      <footer class="footer">
+        <div class="container">
+        <p></p>
+        </div>
+      </footer>
+    </body>
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+    <script src="js/phylocanvas_app.js"></script>
+    <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script>
+</html>

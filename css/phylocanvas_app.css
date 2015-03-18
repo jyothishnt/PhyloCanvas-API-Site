@@ -1,0 +1,36 @@
+body {
+	margin: 0px auto;
+	padding: 0px auto;
+}
+#filedrag {
+  border: 2px dashed #ccc;
+  width: 95%;
+  height: 500px;
+  margin: 20px auto;
+}
+#filedrag.hover { border§: 2px dashed #555; }
+
+.center {
+  text-align: center;
+}
+.clear {
+	clear: both;
+}
+.pc-buttons
+{
+    border : 1px solid #CCCCCC;
+    background: #EEE;
+}
+.pc-buttons .pc-buttons-title
+{
+    text-align: center;
+    background: #ccc;
+    padding: 0px;
+
+}
+
+.pc-buttons .row
+{
+    padding: 10px;
+
+}
