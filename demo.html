@@ -9,15 +9,19 @@
     <link href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 
-    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/styles/PhyloCanvas.css" />
+<!--     <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/styles/PhyloCanvas.css" />
     <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script>
+ -->
+    <link rel="stylesheet" type="text/css" href="http://localhost/PhyloCanvas/src/styles/PhyloCanvas.css" />
+    <script type="application/javascript" src="http://localhost/PhyloCanvas/src/scripts/PhyloCanvas.js"></script>
+
     <style>
       body {
         margin: 20px;
       }
 
       #phylocanvas {
-        width: 700px;
+        /*width: 700px;*/
         height: 500px;
         border: 1px solid #ccc;
       }
@@ -41,11 +45,21 @@
       $(document).ready(function(){
 
         // Construct tree object
-        phylocanvas = new PhyloCanvas.Tree('phylocanvas', {historyCollapsed: false});
+        phylocanvas = new PhyloCanvas.Tree('phylocanvas', {historyCollapsed: true});
         phylocanvas.setTreeType('rectangular');
-        var newick_str = "((1:0.133,(2:0.044,3:0.044):0.089):0.415,(9:0.408,(12:0.141,(8:0.103,(7:0.014,11:0.014):0.090):0.038):0.266):0.141):3.678);";
-
+        phylocanvas.nodeAlign = true;
+        var newick_str = "((1:0.133,(2:0.24,3:0.44):0.189):0.415,(9:0.408,(12:0.241,(8:0.13,(7:0.14,11:0.014):0.090):0.038):0.266):0.141):3.678);";
+        var nw_file = "https://cdn.rawgit.com/jyothishnt/PhyloCanvas-API-Site/master/data/tree.nwk";
         phylocanvas.load(newick_str);
+        phylocanvas.addListener('subtree', function(){
+          loadSlider(phylocanvas.textSize);
+        });
+        phylocanvas.addListener('typechanged', function(){
+          loadSlider(phylocanvas.textSize);
+        });
+        phylocanvas.addListener('loaded', function(){
+          loadSlider(phylocanvas.textSize);
+        });
 
         $(document).on('click','#pc-buttons .btn', {} ,function(e){
             $('#pc-buttons .btn').removeClass('btn-info');
@@ -55,6 +69,8 @@
               phylocanvas.setTreeType(this.id);
             else if(this.id == "hide")
               phylocanvas.hideLabels();
+            else if(this.id == "align")
+              phylocanvas.nodeAlign = !phylocanvas.nodeAlign;
             else if(this.id == "show")
               phylocanvas.displayLabels();
             else if(this.id == "toggle")
@@ -94,6 +110,12 @@
             else if(this.id == "expand") {
               phylocanvas.branches['pcn5'].collapsed = false;
             }
+            else if(this.id == 'selectNode') {
+              phylocanvas.selectNodes('1,2,12')
+            }
+            else if(this.id == 'clearSelect') {
+              phylocanvas.clearSelect();
+            }
 
             phylocanvas.draw();
         });
@@ -111,24 +133,14 @@
         $(".slider_text").slider({
             range: "min",
             value: 1,
-            min: 1,
+            min: 5,
             max: 10,
             slide: function(event, ui) {
-              phylocanvas.setTextSize(ui.value + 10);
+              if(ui.value <= 0)
+                ui.value = 1;
+              phylocanvas.setTextSize(ui.value);
             }
         });
-
-        $(".slider_both").slider({
-            range: "min",
-            value: 1,
-            min: 1,
-            max: 10,
-            slide: function(event, ui) {
-              phylocanvas.setNodeSize(ui.value);
-              phylocanvas.setTextSize(ui.value + 10);
-            }
-        });
-
 
         $('#searchbox').keyup(function(){
           if(this.value != "")
@@ -138,6 +150,14 @@
             phylocanvas.draw();
           }
         });
+
+        function loadSlider(val) {
+          $( ".slider_text" ).slider({
+            value: val,
+            min: val-10,
+            max: val + 10
+          });
+        }
 
       });
     </script>
@@ -164,10 +184,18 @@
             <button id="toggle" class="btn btn-default btn-xs">Toggle</button>
             <hr>
 
+            <p>Select Node </p>
+            <button id="selectNode" class="btn btn-default btn-xs">Select</button>
+            <button id="clearSelect" class="btn btn-default btn-xs">Revert</button>
+            <hr>
+
+            <p>Node Align </p>
+            <button id="align" class="btn btn-default btn-xs">True/False</button>
+            <hr>
+
             <p>Node Size </p>
             Node size: <div class="slider slider_node"></div>
             Text size: <div class="slider slider_text"></div>
-            Both: <div class="slider slider_both"></div>
             <hr>
 
             <p>Color Node</p>

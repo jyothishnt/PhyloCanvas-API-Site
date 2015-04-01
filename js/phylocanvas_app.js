@@ -5,18 +5,11 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
 */
 (function() {
 
-  // getElementById
-  function $id(id) {
-    return document.getElementById(id);
-  }
-
-
   // output information
   function outputMessage(msg) {
-    var m = $id("messages");
+    var m = document.getElementById("messages");
     m.innerHTML = msg + "<br>" + m.innerHTML;
   }
-
 
   // file drag hover
   function FileDragHover(e) {
@@ -25,16 +18,12 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
     e.target.className = (e.type == "dragover" ? "hover" : "");
   }
 
-
   // file selection
   function FileSelectHandler(e) {
-    console.log(this)
     // cancel event and hover styling
     FileDragHover(e);
-
     // fetch FileList object
     var files = e.target.files || e.dataTransfer.files;
-
     // process all File objects
     for (var i = 0, f; f = files[i]; i++) {
       ParseFile(this, f);
@@ -42,32 +31,140 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
 
   }
 
+  var metadata = {};
 
   // output file information
   function ParseFile(filedrag, file) {
-    var textType = /\*.nwk/;
+    var fileType = /.*\.nwk|.*\.txt|.*\.tree|.*\.csv/i;
 
-    if (file.type.match(textType) || 1) {
+    if (file.name.match(fileType)) {
       var reader = new FileReader();
 
       reader.onload = function(e) {
         if(checkIfTreeFile(reader.result)) {
           // Clear canvas div before drawing new tree
-          $(filedrag).find('canvas').remove();
+          $(filedrag).find('#phylocanvas').children().remove();
           renderPhyloCanvas(reader.result);
+          if(Object.keys(metadata).length > 0) {
+            renderMetadata(metadata);
+          }
+
         }
         else {
-          renderMetadata(reader.result);
+          metadata = csvToJson(reader.result);
+          if(phylocanvas !== undefined) {
+            renderMetadata(metadata);
+          }
         }
       };
 
       reader.readAsText(file);
-    } else {
+    }
+     else {
       outputMessage("File not supported!");
     }
   }
 
+  function renderMetadata(metadata) {
+    var datamap = {};
+    phylocanvas.clearMetadata();
+    for(var id in metadata.parsedData) {
+      if(phylocanvas.branches[id]) {
+        phylocanvas.branches[id]['data'] = metadata.parsedData[id];
+      }
+    }
+
+    phylocanvas.viewMetadataColumns();
+    openMetadataColumnWindow();
+  }
+
+  // click to open metadata column window
+  function openMetadataColumnWindow() {
+    //dialog options
+    var dialogOptions = {
+      "title" : "Metadata Columns",
+      "width" : 250,
+      "height" : 300,
+      "modal" : false,
+      "resizable" : true,
+      "close" : function(){ $(this).remove(); }
+    };
+
+    // dialog-extend options
+    var dialogExtendOptions = {
+      "closable" : false,
+      "maximizable" : false,
+      "minimizable" : true,
+      "dblclick" : 'minimize',
+      "titlebar" : 'transparent'
+    };
+    // open dialog with column name buttons
+
+    $("#metadataColumns").html('');
+    createColumnCheckboxes(metadata.columnHeaders);
+    // $("#metadataColumns").dialog(dialogOptions).dialogExtend(dialogExtendOptions);
+  }
+
+  function createColumnCheckboxes(columnHeaders) {
+    var container = document.getElementById('metadataColumns');
+    var div = document.createElement('div');
+    var checkbox;
+    checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.name = 'selectAll';
+    checkbox.value = 'metadataColumnSelectAll';
+    checkbox.id = 'metadataColumnSelectAllCheckbox';
+    checkbox.checked = true;
+
+    var label = document.createElement('label')
+    label.htmlFor = 'Select All';
+    label.appendChild(document.createTextNode('Select All'));
+
+    div.appendChild(checkbox);
+    div.appendChild(label);
+    container.appendChild(div);
+
+    for (var i = 0; i < columnHeaders.length; i++) {
+      div = document.createElement('div');
+      checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
+      checkbox.name = "metadata_columns_checkbox";
+      checkbox.value = columnHeaders[i];
+      checkbox.id = "metadata_columns_checkbox";
+      checkbox.checked = true;
+
+      var label = document.createElement('label')
+      label.htmlFor = columnHeaders[i];
+      label.appendChild(document.createTextNode(columnHeaders[i]));
+
+      div.appendChild(checkbox);
+      div.appendChild(label);
+      container.appendChild(div);
+    }
+  }
+
+  //Parse CSV file with headers
+  function csvToJson(csv){
+    var lines=csv.split("\n");
+    var result = {};
+    var headers=lines[0].split(",");
+    for(var i=1;i<lines.length;i++){
+      if (lines[i] == "") continue;
+      var currentline=lines[i].split(",");
+      result[currentline[0]] = {};
+      for(var j=1;j<headers.length;j++){
+        result[currentline[0]][headers[j]] = currentline[j];
+      }
+    }
+    headers.shift();
+    var hash = {
+      'columnHeaders' : headers,
+      'parsedData' : result
+    }
+    return hash; //JSON
+  }
   function checkIfTreeFile(tree) {
+
     if (tree.match(/^#NEXUS[\s\n;\w\.\*\:(\),-=\[\]\/&]+$/i) || tree.match(/^[\w\.\*\:(\),-\/]+;\s?$/gi)) {
       return true;
     } else {
@@ -79,16 +176,36 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
     // Construct tree object
     phylocanvas = new PhyloCanvas.Tree('phylocanvas', { historyCollapsed : true });
     phylocanvas.setTreeType('rectangular');
+    phylocanvas.nodeAlign = true;
+
+    phylocanvas.addListener('loaded', function(){
+      loadSlider(phylocanvas.textSize);
+    });
+    phylocanvas.addListener('subtree', function(){
+      loadSlider(phylocanvas.textSize);
+    });
+    phylocanvas.addListener('typechanged', function(){
+      loadSlider(phylocanvas.textSize);
+    });
+
     phylocanvas.load(tree);
+    // phylocanvas.load('https://cdn.rawgit.com/jyothishnt/PhyloCanvas-API-Site/master/data/tree.nwk')
+    // phylocanvas.setZoom(-0.11);
     window.phylocanvas = phylocanvas;
   }
 
   // initialize
   function Init() {
 
-    // var fileselect = $id("fileselect"),
-      var filedrag = $id("filedrag");
-      // submitbutton = $id("submitbutton");
+    $(document).ready(function(){
+      // renderPhyloCanvas('((1:0.133,(2:0.24,3:0.44):0.189):0.415,(9:0.408,(1200:0.241,(8:0.13,(7:0.14,11:0.014):0.090):0.038):0.266):0.141):3.678);');
+      // renderMetadata('label,data1,data2,data3\n1,1,0,0\n2,0,1,1\n3,1,0,1\n1200,1,1,1\n5,0,1,0');
+    });
+
+    // var fileselect = document.getElementById("fileselect"),
+      var filedrag = document.getElementById("filedrag");
+
+      // submitbutton = document.getElementById("submitbutton");
 
     // file select
     // fileselect.addEventListener("change", FileSelectHandler, false);
@@ -102,7 +219,6 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
       filedrag.addEventListener("dragleave", FileDragHover, false);
       filedrag.addEventListener("drop", FileSelectHandler, false);
       filedrag.style.display = "block";
-
       // remove submit button
       // submitbutton.style.display = "none";
     }
@@ -114,27 +230,85 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
     Init();
   }
 
+  function loadSlider(val) {
+    $( ".slider_text" ).slider({
+      value: val,
+      min: val - 10,
+      max: val + 10
+    });
+  }
 
 })();
 
+  $(document).on('change','#metadataColumnSelectAllCheckbox', {} ,function(e){
+    var checked = this.checked;
+    $('input[name="metadata_columns_checkbox"').each(function() {
+      this.checked = checked;
+    });
+    $('#metadata_columns_checkbox').change();
+  });
+  $(document).on('change','#metadata_columns_checkbox', {} ,function(e){
+    var view_col_array = [];
+    $('#metadata_columns_checkbox:checked').each(function() {
+      view_col_array.push($(this).val());
+    });
+    if (view_col_array.length > 0) {
+      phylocanvas.viewMetadataColumns(view_col_array);
+    }
+    else {
+      phylocanvas.showMetadata = false;
+    }
+    phylocanvas.draw();
+  });
 
 
 $(document).ready(function(){
 
-  $(document).on('click','.toggle', {} ,function(e){
-    if($('.pc-buttons').hasClass('collapsed')) {
-      $('.pc-buttons').removeClass('collapsed');
-      $('.pc-buttons').addClass('expand');
-      $(this).html('<');
-      $('.pc-buttons .buttons').show();
+  var defaultHideLeft = '-180px';
+  $('.slideDiv').css('left', defaultHideLeft);
+
+  var slideElementsHash = {};
+  $('.slideUl li').on('click', function(e) {
+    if($(this).hasClass('btn-warning')) {
+      defaultHideLeft = '-180px';
+      highlightSlideButton(this,false);
     }
     else {
-      $('.pc-buttons').removeClass('expand');
-      $('.pc-buttons').addClass('collapsed');
-      $(this).html('>');
-      $('.pc-buttons .buttons').hide();
+      defaultHideLeft = '0px';
+      highlightSlideButton(this,true);
     }
+
+    $('.slideDiv').animate({
+      'left': defaultHideLeft
+    });
+
+    $('.slideDivContent').hide();
+    var ele = document.getElementById($(this).attr('data-toggle-id'));
+    $(ele).show();
   });
+
+var highlightSlideButton = function(ele, bool) {
+  if (bool) {
+    $('.slideUl li').removeClass('btn-warning');
+    $('.slideUl li').addClass('btn-default');
+    $(ele).removeClass('btn-default');
+    $(ele).addClass('btn-warning');
+  }
+  else {
+    $('.slideUl li').removeClass('btn-warning');
+    $('.slideUl li').addClass('btn-default');
+  }
+}
+
+  $('.slideDivContent').on('mouseleave', function() {
+    // $('.slideDiv').animate({
+    //   'left': '-180px'
+    // });
+    // $('.slideUl li').removeClass('btn-warning');
+    // $('.slideUl li').addClass('btn-default');
+  });
+
+
   $(document).on('click','.pc-buttons .btn', {} ,function(e){
 
     if(phylocanvas.root) {
@@ -145,6 +319,8 @@ $(document).ready(function(){
         phylocanvas.setTreeType(this.id);
       else if(this.id == "hide")
         phylocanvas.hideLabels();
+      else if(this.id == "align")
+        phylocanvas.nodeAlign = !phylocanvas.nodeAlign;
       else if(this.id == "show")
         phylocanvas.displayLabels();
       else if(this.id == "toggle")
@@ -198,34 +374,31 @@ $(document).ready(function(){
       min: 1,
       max: 10,
       slide: function(event, ui) {
-        if(phylocanvas.root)
-          phylocanvas.setNodeSize(ui.value);
+        phylocanvas.setNodeSize(ui.value);
       }
   });
 
   $(".slider_text").slider({
       range: "min",
       value: 1,
-      min: 1,
+      min: 5,
       max: 10,
       slide: function(event, ui) {
-        if(phylocanvas.root)
-          phylocanvas.setTextSize(ui.value + 10);
+        if(ui.value <= 0)
+          ui.value = 1;
+        phylocanvas.setTextSize(ui.value);
       }
   });
 
-  $(".slider_both").slider({
-      range: "min",
-      value: 1,
-      min: 1,
-      max: 10,
-      slide: function(event, ui) {
-        if(phylocanvas.root) {
-          phylocanvas.setNodeSize(ui.value);
-          phylocanvas.setTextSize(ui.value + 10);
-        }
-      }
+  $('#searchbox').keyup(function(){
+    if(this.value != "")
+      phylocanvas.findBranch(this.value);
+    else {
+      phylocanvas.root.setSelected(false, true);
+      phylocanvas.draw();
+    }
   });
+
 
 
   $('#searchbox').keyup(function(){

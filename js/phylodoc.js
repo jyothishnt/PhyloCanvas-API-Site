@@ -27,7 +27,7 @@ $(document).ready(function(){
 	});
 
 	// $('#content section').hide();
-	show('code_samples');
+	show('overview');
 })
 
 var html_data = {};

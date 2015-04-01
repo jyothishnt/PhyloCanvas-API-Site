@@ -1,10 +1,17 @@
 body {
 	margin: 0px auto;
 	padding: 0px auto;
+	font-family: 'Roboto', sans-serif;
+	font-size: 16px;
+    font-weight: 400;
+	line-height:20pt;
+	max-width:none;
+    padding-bottom: 20px;
+    height: 100%;
 }
 #filedrag {
   border: 2px dashed #ccc;
-  width: 95%;
+  width: 90%;
   height: 500px;
   margin: 20px auto;
 }
@@ -18,7 +25,7 @@ body {
 }
 .pc-buttons
 {
-    border : 1px solid #CCCCCC;
+    /*border : 1px solid #CCCCCC;*/
     background: #EEE;
 }
 .pc-buttons .pc-buttons-title
@@ -28,9 +35,88 @@ body {
     padding: 0px;
 
 }
-
-.pc-buttons .row
+.pc-buttons button {
+	margin: 5px 0px;
+}
+.pc-buttons p
 {
-    padding: 10px;
+    padding: 10px 0px;
+    color: teal;
 
+}
+p.title {
+  padding: 5px;
+  /*background: #ccc;*/
+  text-align: center;
+  color: #000;
+  text-decoration: underline;
+}
+.info {
+	font-size: 1.2em;
+	font-weight: 300;
+}
+#phylocanvas {
+	width: 100%;
+	height: 500px;
+}
+.slider {
+	width: 100%;
+}
+#searchbox {
+  width: 100%;
+}
+.ui-dialog-titlebar {
+  padding: 0px 1em !important;
+}
+.ui-dialog {
+  font-size:  1em !important;
+}
+.ui-dialog-cotent {
+  font-weight: normal;
+}
+#metadataColumns label{
+    color:black;
+    padding: 0px 5px;
+    font-weight: normal;
+    font-size: 12px;
+    margin: 5px 2px;
+}
+#metadataColumns div {
+  line-height:  5px;
+}
+.slideDiv {
+  position: absolute;
+  top: 0px;
+  width:200px;
+  max-height: 100%;
+  height:100%;
+  padding: 70px 5px 5px 5px;
+  background-color: #eee;
+  box-shadow: 0px 0px 7px #292929;
+  -moz-box-shadow: 0px 0px 7px #292929;
+  -webkit-box-shadow: 0px 0px 7px #292929;
+  z-index: 2;
+  left: -180px;
+}
+.slideDiv div{
+  /*display: none;*/
+}
+.slideDiv ul{
+  float: right;
+  right: 10px;
+  display: block;
+  width: 30px;
+}
+.slideDiv ul li {
+  margin: 1px 0px;
+  width: 35px;
+}
+
+.slideDivContent {
+  padding: 10px;
+  position: absolute;
+  display: none;
+  width: 90%;
+  height: 92%;
+  overflow: auto;
 }
