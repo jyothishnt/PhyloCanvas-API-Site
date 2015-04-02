@@ -47,13 +47,17 @@
 
 				</div>
 			  <div id="filedrag">
+			  	<div class="centermiddle">
+				  	<i class="fa fa-cloud-upload fa-3x"></i>
+				  	<p class="info">Drag and drop your Newick tree and metadata CSV file here</p>
+				  </div>
 			  	<div id="phylocanvas"></div>
 			  </div>
 
 			  <div id="slideDiv"  class="slideDiv">
 				  <ul class="slideUl">
-				  	<li data-toggle-id="metadataColumnsDiv" class="btn btn-default" data-text="Metadata Columns">M</li>
-				  	<li data-toggle-id="toolsDiv" class="btn btn-default">T</li>
+				  	<li id="metadata_li" data-toggle-id="metadataColumnsDiv" class="btn btn-default" data-text="Metadata Columns"><i class="fa fa-list-ul fa-xs"></i><span>Metadata</span></li>
+				  	<li id="tools_li" data-toggle-id="toolsDiv" class="btn btn-default"><i class="fa fa-cogs fa-fw"></i><span>Tools</span></li>
 				  </ul>
 
 				  <div id="metadataColumnsDiv" class="slideDivContent">
@@ -69,18 +73,26 @@
 	            <button id="radial" class="btn btn-default btn-xs">Radial</button>
 	            <button id="diagonal" class="btn btn-default btn-xs">Diagonal</button>
 	            <button id="hierarchy" class="btn btn-default btn-xs">Hierarchical</button>
+	            <hr>
 
 	            <p>Node Align </p>
 	            <button id="align" class="btn btn-default btn-xs">True/False</button>
+	            <hr>
+
+	            <p>Metadata</p>
+	            <button id="metadata" class="btn btn-default btn-xs">Show/Hide</button>
+	            <hr>
 
 	            <p>Show/Hide Labels </p>
 	            <button id="show" class="btn btn-default btn-xs">Show</button>
 	            <button id="hide" class="btn btn-default btn-xs">Hide</button>
 	            <button id="toggle" class="btn btn-default btn-xs">Toggle</button>
+	            <hr>
 
 	            <p>Node Size </p>
 	            Node size: <div class="slider slider_node"></div>
 	            Text size: <div class="slider slider_text"></div>
+	            <hr>
 
 	            <p>Search </p>
 	            <input type="text" id="searchbox">
@@ -91,14 +103,10 @@
 
 			  <div class="center">
 				  <p id="messages"></p>
-				  <i class="fa fa-cloud-upload fa-3x"></i>
-				  <p class="info">Drag and drop your newick tree file on to the drop zone above</p>
 				</div>
 			</section>
       <footer class="footer">
-        <div class="container">
-        <p></p>
-        </div>
+        <p>Wellcome Trust Sanger Institute 2015</p>
       </footer>
     </body>
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -106,6 +114,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
     <script src="js/phylocanvas_app.js"></script>
-    <!-- <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script> -->
-    <script type="application/javascript" src="http://localhost/PhyloCanvas/src/scripts/PhyloCanvas.js"></script>
+    <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script>
+    <!-- <script type="application/javascript" src="http://localhost/PhyloCanvas/src/scripts/PhyloCanvas.js"></script> -->
 </html>
