@@ -1,27 +1,28 @@
-/*
-filedrag.js - HTML5 File Drag & Drop demonstration
-Featured on SitePoint.com
-Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
-*/
 (function() {
 
   // output information
   function outputMessage(msg) {
-    var m = document.getElementById("messages");
-    m.innerHTML = msg + "<br>" + m.innerHTML;
+    $("#messages").html(msg).effect("highlight", {color:'orange'}, 3000);
   }
 
   // file drag hover
   function FileDragHover(e) {
-    $('.centermiddle').remove();
     e.stopPropagation();
     e.preventDefault();
-    e.target.className = (e.type == "dragover" ? "hover" : "");
+    // e.target.className = (e.type == "dragover" ? "hover" : "");
+    if(e.type == "dragover") {
+      $('body').addClass("hover");
+      $('.centermiddle').children('i').addClass('fa-spin')
+    }
+    else {
+      $('.centermiddle').children('i').removeClass('fa-spin')
+      $('body').removeClass("hover");
+    }
   }
 
   // file selection
   function FileSelectHandler(e) {
-    // cancel event and hover styling
+    // Cancel event and hover styling
     FileDragHover(e);
 
     // fetch FileList object
@@ -30,7 +31,7 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
     for (var i = 0, f; f = files[i]; i++) {
       ParseFile(this, f);
     }
-
+    $('body').removeClass("hover");
   }
 
   var metadata = {};
@@ -47,7 +48,7 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
           $('.slideDiv, #tools_li').show();
           // Clear canvas div before drawing new tree
           $(filedrag).find('#phylocanvas').children().remove();
-          console.log($('.centermiddle'))
+          $('.centermiddle').remove();
           renderPhyloCanvas(reader.result);
           if(Object.keys(metadata).length > 0) {
             renderMetadata(metadata);
@@ -206,13 +207,7 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
       // renderMetadata('label,data1,data2,data3\n1,1,0,0\n2,0,1,1\n3,1,0,1\n1200,1,1,1\n5,0,1,0');
     });
 
-    // var fileselect = document.getElementById("fileselect"),
-      var filedrag = document.body;
-      // submitbutton = document.getElementById("submitbutton");
-
-    // file select
-    // fileselect.addEventListener("change", FileSelectHandler, false);
-
+    var filedrag = document;
     // is XHR2 available?
     var xhr = new XMLHttpRequest();
     if (xhr.upload) {
@@ -221,11 +216,7 @@ Developed by Craig Buckler (@craigbuckler) of OptimalWorks.net
       filedrag.addEventListener("dragover", FileDragHover, false);
       filedrag.addEventListener("dragleave", FileDragHover, false);
       filedrag.addEventListener("drop", FileSelectHandler, false);
-      // filedrag.style.display = "block";
-      // remove submit button
-      // submitbutton.style.display = "none";
     }
-
   }
 
   // call initialization file

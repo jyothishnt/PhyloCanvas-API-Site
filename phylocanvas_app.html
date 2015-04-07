@@ -31,15 +31,6 @@
 
 	          <a class="navbar-brand" href="index.html">Phylocanvas</a>
 	        </div>
-	        <div id="navbar" class="navbar-collapse collapse">
-
-	          <form class="navbar-form navbar-right">
-	            <div class="form-group">
-	              <input type="text" placeholder="search" class="form-control">
-	            </div>
-	            <button type="submit" class="btn btn-success">Search</button>
-	          </form>
-	        </div><!--/.navbar-collapse -->
 	      </div>
 	    </nav>
 			<section id="drag-and-drop">
@@ -48,8 +39,9 @@
 				</div>
 			  <div id="filedrag">
 			  	<div class="centermiddle">
-				  	<i class="fa fa-cloud-upload fa-3x"></i>
-				  	<p class="info">Drag and drop your Newick tree and metadata CSV file here</p>
+				  	<i class="fa fa-arrow-circle-o-down fa-4x"></i>
+				  	<p class="info">Drag and drop your Newick tree and metadata CSV file</p>
+				  	<p id="messages"></p>
 				  </div>
 			  	<div id="phylocanvas"></div>
 			  </div>
@@ -101,12 +93,9 @@
 			  </div>
 
 
-			  <div class="center">
-				  <p id="messages"></p>
-				</div>
 			</section>
       <footer class="footer">
-        <p>Wellcome Trust Sanger Institute 2015</p>
+        <p>WTSI <i class="fa fa-copyright"></i> 2015</p>
       </footer>
     </body>
     <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -114,6 +103,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
     <script src="js/phylocanvas_app.js"></script>
-    <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script>
-    <!-- <script type="application/javascript" src="http://localhost/PhyloCanvas/src/scripts/PhyloCanvas.js"></script> -->
+    <!-- <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script> -->
+    <script type="application/javascript" src="http://localhost/PhyloCanvas/src/scripts/PhyloCanvas.js"></script>
 </html>
