@@ -20,37 +20,31 @@
     <nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <button type="button" class="navbar-toggle" data-toggle="leftMenuToggle" data-target="">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-
           <a class="navbar-brand" href="#">Phylocanvas</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="search" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Search</button>
-          </form>
-        </div><!--/.navbar-collapse -->
       </div>
     </nav>
-        <a id="fork" target="_blank" href="https://github.com/CIPowell/PhyloCanvas"><img src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+        <div class="hidden-xs">
+          <a id="fork" target="_blank" href="https://github.com/CIPowell/PhyloCanvas"><img src="https://camo.githubusercontent.com/a6677b08c955af8400f44c6298f40e7d19cc5b2d/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677261795f3664366436642e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png"></a>
+        </div>
 
-        <div class="container">
+<!--         <button type="button" class="pull-right visible-xs" data-toggle="leftMenuToggle" data-target="">
+          Menu
+        </button>
+ -->        <div class="container">
             <div class="row">
-
-              <div class="col-lg-2 col-md-2">
-                <nav>
+              <div class="col-lg-2 col-md-3 col-sm-3">
+                <nav id="leftmenu" class="hidden-xs">
                     <div id="accordion_menu">
                         <ul>
                           <li><a class="active" data-id="overview">Overview</a></li>
-                          <li><a target="_blank" href="phylocanvas_app.html">Play</a></li>
+                          <li><a target="_blank" data-id="play" href="phylocanvas_app.html">Play</a></li>
                           <li><a data-id="getting_started">Getting Started</a></li>
                           <li><a data-id="tech_doc">Technical Doc</a></li>
                           <li><a data-id="api_ref">API Reference</a>
@@ -66,8 +60,7 @@
                     </div>
                 </nav>
               </div>
-
-              <div id="content" class="col-lg-9 col-md-9">
+              <div id="content" class="col-lg-9 col-md-8 col-sm-8">
 
               </div>
             </div>

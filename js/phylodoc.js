@@ -1,6 +1,14 @@
+/********* JS for PhyloCanvas API Site **************/
 
 $(document).ready(function(){
+  $('[data-toggle="leftMenuToggle"]').click(function () {
+    $('#leftmenu').toggleClass('hidden-xs')
+  });
+
 	$('#accordion_menu li a').on('click', function(){
+        if($(this).attr('data-id') === 'play') {
+            return;
+        }
 		loadTemplate(this);
 		// $('#content section').hide();
 		// $('#content section#'+$(this).attr('data-id')).show();
@@ -10,11 +18,9 @@ $(document).ready(function(){
 		if($(this).children('ul').length) {
 			$(this).children('ul').slideDown();
 		}
-        // phylocanvas.resizeToContainer();
 	});
 
 	/**** For github fork stick on scroll ****/
-
 	var s = $("#fork");
 	var pos = s.position();
 	$(window).scroll(function() {
@@ -28,13 +34,15 @@ $(document).ready(function(){
 
 	// $('#content section').hide();
 	show('overview');
-})
+});
 
+// To cache data loaded from the server
 var html_data = {};
 /***** Function to load content on menu click *****/
 var loadTemplate = function(ele) {
+    var url = '';
     if(!$(ele).length) {
-        var url= ele + '.html';
+        url= ele + '.html';
         //alert(url);
         $('#content').load(url);
         $('html, body').animate({ scrollTop: 0 }, 'slow');
@@ -42,7 +50,11 @@ var loadTemplate = function(ele) {
     }
 
     var _id = $(ele).attr('data-id');
-    var url= _id + '.html';
+    url= _id + '.html';
+
+    if(_id === 'play') {
+        return;
+    }
 
     if(html_data[_id]) {
     	$('#content').html('');
@@ -56,7 +68,6 @@ var loadTemplate = function(ele) {
 	          $('#content').html('<h2><i class="fa fa-thumbs-o-down oblue"></i>This page is currently not available. Please try after some time</h2>');
 	          return;
 	        }
-
 		    if(_id == "overview") {
 				createOverviewTree();
 		    }
@@ -64,14 +75,9 @@ var loadTemplate = function(ele) {
 		    html_data[_id] = $('#content section');
 	    });
 	}
-
-}
+};
 function show(div_id) {
 	$('#accordion_menu li').find("[data-id="+div_id+"]").click();
-
-	// $('#'+div_id).show();
-	// $('#accordion_menu li a').removeClass('active');
-	// $('#accordion_menu li a[data-id="'+div_id+'"]').addClass('active');
 }
 
 var phylocanvas;
@@ -98,7 +104,7 @@ function getData()
     phylocanvas.AJAX('data/mrsa.json', 'GET', '', colour);
 }
 
-function colour(response){
+function colour(response) {
     var colours = ['teal', '#762a83', '#777'];
 
     var data = JSON.parse(response.response);
@@ -106,34 +112,28 @@ function colour(response){
     phylocanvas.setNodeColourAndShape(data.positive, colours[0], 'x');
     phylocanvas.setNodeColourAndShape(data.negative, colours[1], 'o');
 
-    phylocanvas.backColour = function(node)
-    {
-        if(node.children.length)
-        {
+    phylocanvas.backColour = function(node){
+        if(node.children.length) {
             var child_cols = node.getChildColours();
-            if(child_cols.length === 1)
-            {
+            if(child_cols.length === 1) {
                 return child_cols[0];
             }
-            else
-            {
+            else {
                 return colours[2];
             }
         }
-        else
-        {
+        else {
             return node.colour;
         }
     };
 }
-
 
 $(document).on('click','#pc-buttons .btn', {} ,function(e){
     $('#pc-buttons .btn').removeClass('btn-info');
     $('#pc-buttons .btn').addClass('btn-default');
     $(this).addClass('btn-info');
 	phylocanvas.setTreeType(this.id);
-})
+});
 
 $(document).on('click','.showExample', {}, function(e){
     if($(this).html() == "View live") {
@@ -158,11 +158,10 @@ $(document).on('click','.showExample', {}, function(e){
       $(this).next('#jsbin_example').hide();
       $(this).html('View live');
     }
-})
+});
 
 function setIframeHeight(ifrm) {
     var doc = ifrm.contentWindow || ifrm.contentDocument.parentWindow;
-    console.log(doc)
     ifrm.style.visibility = 'hidden';
     ifrm.style.height = "10px"; // reset to minimal height ...
     // IE opt. for bing/msn needs a bit added or scrollbar appears
