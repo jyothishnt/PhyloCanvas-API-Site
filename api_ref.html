@@ -1445,7 +1445,6 @@
                     <div id="api_contextmenu" class="table-responsive">
                       <a href="#api_ref" class='gotop'>Top</a>
                       <h2>PhyloCanvas.ContextMenu</h2>
-                      <p>The history panel of sub-trees</p>
                       <h4>Properties</h4>
                       <table class="table table-striped properties">
                         <tr>
@@ -1472,6 +1471,30 @@
                           </td>
                         </tr>
                       </table>
+
+                      <p>Configuring a context menu at the time of Tree initialization
+<pre>
+phylocanvas = new PhyloCanvas.Tree('phylocanvas', {
+  // other options
+  contextMenu : [{
+    text: 'Normal Menu',
+    handler: 'triggerNormal',
+    internal: false,
+    leaf: false
+  }, {
+    text: 'Internal Menu',
+    handler: 'triggerInternal',
+    internal: true,
+    leaf: false
+  }, {
+    text: 'Save as PNG',
+    handler: 'exportCurrentTreeView',
+    internal: false,
+    leaf: false
+  }]
+});
+</pre>
+                      </p>
                     </div>
 
                     <div id="api_contextmenu_functions" class="table-responsive">

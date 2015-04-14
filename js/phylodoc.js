@@ -32,7 +32,6 @@ $(document).ready(function(){
 		}
 	});
 
-  // var menuArr = ['overview','getting_started','tech_doc','api_ref','code_samples','faqs'];
   var fragment = (window.location.hash)? window.location.hash.substring(1) : 'overview';
   show(fragment);
 });

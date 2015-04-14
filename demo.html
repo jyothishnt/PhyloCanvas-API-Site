@@ -2,18 +2,10 @@
 <html>
   <head>
 
-    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
     <link href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.min.css" rel="stylesheet" type="text/css" />
-    <script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-
-<!--     <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/styles/PhyloCanvas.css" />
-    <script type="application/javascript" src="https://cdn.rawgit.com/imperialcollegelondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script>
- -->
-    <!-- <link rel="stylesheet" type="text/css" href="http://localhost/PhyloCanvas/src/styles/PhyloCanvas.css" /> -->
-    <script type="application/javascript" src="http://localhost/PhyloCanvas/src/scripts/PhyloCanvas.js"></script>
 
     <style>
       body {
@@ -45,7 +37,26 @@
       $(document).ready(function(){
 
         // Construct tree object
-        phylocanvas = new PhyloCanvas.Tree('phylocanvas', {historyCollapsed: true});
+        phylocanvas = new PhyloCanvas.Tree('phylocanvas', {
+          historyCollapsed: true,
+          contextMenu : [{
+            text: 'Normal Menu',
+            handler: 'triggerNormal',
+            internal: false,
+            leaf: false
+          }, {
+            text: 'Internal Menu',
+            handler: 'triggerInternal',
+            internal: true,
+            leaf: true
+          }, {
+            text: 'Save as PNG',
+            handler: 'exportCurrentTreeView',
+            internal: false,
+            leaf: false
+          }]
+        });
+
         phylocanvas.setTreeType('rectangular');
         phylocanvas.nodeAlign = true;
         var newick_str = "((1:0.133,(2:0.24,3:0.44):0.189):0.415,(9:0.408,(12:0.241,(8:0.13,(7:0.14,11:0.014):0.090):0.038):0.266):0.141):3.678);";
@@ -60,6 +71,85 @@
         phylocanvas.addListener('loaded', function(){
           loadSlider(phylocanvas.textSize);
         });
+
+        phylocanvas.triggerNormal = function() {
+          alert('Normal menu clicked');
+        };
+
+        var node = phylocanvas.leaves[0];
+        node.triggerInternal = function() {
+          alert('Clicked leaf - ' + node.id);
+        };
+
+
+        phylocanvas.exportCurrentTreeView = function () {
+          var dataUrl = canvasToImage(this, 'white');
+          var anchor = document.createElement('a');
+          var isDownloadSupported = (typeof anchor.download !== 'undefined');
+
+          anchor.href = dataUrl;
+          anchor.target = '_blank';
+
+          if (isDownloadSupported) {
+            anchor.download = 'phylocanvas.png'; // TODO: create filename from UI state
+          }
+
+          var event = document.createEvent('Event');
+          event.initEvent('click', true, true);
+          anchor.dispatchEvent(event);
+
+          if (isDownloadSupported) {
+            (window.URL || window.webkitURL).revokeObjectURL(anchor.href);
+          }
+        };
+
+        function canvasToImage(tree, backgroundColor)
+        {
+            //cache height and width
+            var x = tree.offsetx;
+            var y = tree.offsety;
+            var w = tree.canvas.canvas.offsetWidth - tree.offsetx;
+            var h = tree.canvas.canvas.offsetHeight - tree.offsety;
+            var context = tree.canvas;
+            console.log(tree)
+            var data;
+
+            if(backgroundColor)
+            {
+                //get the current ImageData for the canvas.
+                data = context.getImageData(0, 0, w, h);
+
+                //store the current globalCompositeOperation
+                var compositeOperation = context.globalCompositeOperation;
+
+                //set to draw behind current content
+                context.globalCompositeOperation = "destination-over";
+
+                //set background color
+                context.fillStyle = backgroundColor;
+
+                //draw background / rect on entire canvas
+                context.fillRect(x,y,w,h);
+            }
+
+            //get the image data from the canvas
+            var imageData = tree.canvas.canvas.toDataURL("image/png");
+
+            if(backgroundColor)
+            {
+                //clear the canvas
+                context.clearRect (0,0,w,h);
+
+                //restore it with original / cached ImageData
+                context.putImageData(data, 0,0);
+
+                //reset the globalCompositeOperation to what it was
+                context.globalCompositeOperation = compositeOperation;
+            }
+
+            //return the Base64 encoded data url string
+            return imageData;
+        }
 
         $(document).on('click','#pc-buttons .btn', {} ,function(e){
             $('#pc-buttons .btn').removeClass('btn-info');
@@ -234,4 +324,10 @@
       </div>
     </div>
   </body>
+  <script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+  <script src="//code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+  <script type="application/javascript" src="https://cdn.rawgit.com/ImperialCollegeLondon/PhyloCanvas/master/src/scripts/PhyloCanvas.js"></script>
+  <!-- <script type="application/javascript" src="http://localhost/PhyloCanvas/src/scripts/PhyloCanvas.js"></script> -->
+
 </html>

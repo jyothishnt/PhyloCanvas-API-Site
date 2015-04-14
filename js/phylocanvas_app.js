@@ -181,7 +181,9 @@
   }
   function renderPhyloCanvas(tree) {
     // Construct tree object
-    phylocanvas = new PhyloCanvas.Tree('phylocanvas', { historyCollapsed : true });
+    phylocanvas = new PhyloCanvas.Tree('phylocanvas', {
+      historyCollapsed : true
+    });
     phylocanvas.setTreeType('rectangular');
     phylocanvas.nodeAlign = true;
 
